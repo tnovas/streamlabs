@@ -15,7 +15,7 @@ class StreamLabs {
 		
 		this.__urlApi = {
 			base: 'https://www.streamlabs.com/api/v1.0/',
-			autorizate: 'authorize',
+			authorizate: 'authorize',
 			accessTokenPath: 'token',
 			accessSocketTokenPath: 'socket/token',
 			donations: 'donations',
@@ -23,11 +23,19 @@ class StreamLabs {
 		};
 	}
 
-	autorizationUrl() {
-		return `${this.__urlApi.base}${this.__urlApi.autorizate}?client_id=${this.__credentials.clientId}&redirect__uri=${this.__credentials.redirectUrl}&response_type=code&scope=${this.__credentials.scopes}`;
+	authorizationUrl() {
+		return `${this.__urlApi.base}${this.__urlApi.authorizate}?client_id=${this.__credentials.clientId}&redirect__uri=${this.__credentials.redirectUrl}&response_type=code&scope=${this.__credentials.scopes}`;
 	}
 
-	connect(code) {
+	getCredentials() {
+		return {
+			accessToken: this.__credentials.accessToken,
+			refreshToken: this.__credentials.refreshToken,
+			socketToken: this.__credentials.socketToken
+		}
+	}
+
+	connect(code, errCallback) {
 		let url = this.__urlApi.base + this.__urlApi.accessTokenPath;
 		let body = {
 			grant_type: 'authorization__code',
@@ -40,10 +48,10 @@ class StreamLabs {
 		this.__post(url, body, (result) => {
 			this.__credentials.accessToken = result.access_token;
 			this.__credentials.refreshToken = result.refresh_token;
-	    });
+	    }, errCallback);
 	}
 
-	getDonations(limit, callback) {
+	getDonations(limit, callback, errCallback) {
 		let url = this.__urlApi.base + this.__urlApi.donations;
 		let qs = {
 			access_token: this.__credentials.accessToken,
@@ -52,17 +60,17 @@ class StreamLabs {
 			verified: false
 		};
 
-		this.__get(url, qs, callback);
+		this.__get(url, qs, callback, errCallback);
 	}
 
-	addDonation(donation, callback) {
+	addDonation(donation, callback, errCallback) {
 		let url = this.__urlApi.base + this.__urlApi.donations;
 		donation.access_token = this.__credentials.accessToken;
 
-		this.__post(url, donation, callback);
+		this.__post(url, donation, callback, errCallback);
 	}
 
-	getSocketToken(callback) {
+	getSocketToken(callback, errCallback) {
 		let url = this.__urlApi.base + this.__urlApi.accessSocketTokenPath;
 		let qs = {
 		 access_token: this.__credentials.accessToken
@@ -71,10 +79,10 @@ class StreamLabs {
 		this.__get(url, qs, (result) => {
 			this.__credentials.socketToken = result.socket_token; 
 			callback(result);
-		});
+		}, errCallback);
 	}
 
-	__get(url, qs, callback) {
+	__get(url, qs, callback, errCallback) {
 		request({
 		    method: 'GET',
 		    url: url,
@@ -82,12 +90,10 @@ class StreamLabs {
 		    json: true
 		})
 		.then(callback)
-	    .catch(function (err) {
-	        console.log(err);
-	    });
+	    .catch(errCallback);
 	}
 
-	__post(url, body, callback) {
+	__post(url, body, callback, errCallback) {
 		request({
 		    method: 'POST',
 		    uri: url,
@@ -95,9 +101,7 @@ class StreamLabs {
 		    json: true
 		})
 		.then(callback)
-	    .catch(function (err) {
-	        console.log(err);
-	    });
+	    .catch(errCallback);
 	}
 }
 

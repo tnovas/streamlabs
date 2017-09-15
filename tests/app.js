@@ -29,7 +29,7 @@ describe('StreamLabs', function() {
 
 		var urlApi = {
 			base: 'https://www.streamlabs.com/api/v1.0/',
-			autorizate: 'authorize',
+			authorizate: 'authorize',
 			accessTokenPath: 'token',
 			accessSocketTokenPath: 'socket/token',
 			donations: 'donations',
@@ -40,8 +40,8 @@ describe('StreamLabs', function() {
 		expect(JSON.stringify(streamLabs.__urlApi)).to.equal(JSON.stringify(urlApi));
 	});
 
-	it('autorizationUrl() should return Url of autorization', function() {
-		expect(streamLabs.autorizationUrl()).to.equal("https://www.streamlabs.com/api/v1.0/authorize?client_id=clientId&redirect__uri=redirectUrl&response_type=code&scope=scopes");
+	it('authorizationUrl() should return Url of authorization', function() {
+		expect(streamLabs.authorizationUrl()).to.equal("https://www.streamlabs.com/api/v1.0/authorize?client_id=clientId&redirect__uri=redirectUrl&response_type=code&scope=scopes");
 	});
 
 	it('connect() should connect to Api StreamLabs and set credentials access token', function() {
@@ -58,6 +58,14 @@ describe('StreamLabs', function() {
 			}
 
 		}, 1000)
+	});
+
+	it('addDonation() should get Error', function() {
+		var scope = nock('https://www.streamlabs.com')
+                .post('/api/v1.0/donations')
+                .reply(500);
+
+		streamLabs.addDonation({}, () => {}, () => {});
 	});
 
 	it('addDonation() should add donation on StreamLabs and return Id Donation', function() {
@@ -86,6 +94,14 @@ describe('StreamLabs', function() {
 		});
 	});
 
+	it('getSocketToken() should get error', function(){
+		var scope = nock('https://www.streamlabs.com')
+                .get('/api/v1.0/socket/token')
+                .reply(500);
+
+		streamLabs.getSocketToken(() => {}, () => {});
+	});
+
 	it('getSocketToken() should get token for websocket', function(){
 		var scope = nock('https://www.streamlabs.com')
                 .get('/api/v1.0/socket/token')
@@ -97,5 +113,18 @@ describe('StreamLabs', function() {
 		streamLabs.getSocketToken(function(result) {
 			expect(result.socket_token).to.equal("token");
 		});
-	})
+	});
+
+	it('getCredentials() should get credentials', function() {
+		var credentials = {
+			accessToken: 'token',
+			refreshToken: 'token',
+			socketToken: ''
+		};
+
+		var result = streamLabs.getCredentials();
+
+		expect(JSON.stringify(result)).to.equal(JSON.stringify(credentials));
+	});
+
 });

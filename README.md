@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/tnovas/streamLabs.svg?branch=master)](https://travis-ci.org/tnovas/streamLabs)
 [![Coverage Status](https://coveralls.io/repos/github/tnovas/streamLabs/badge.svg?branch=master)](https://coveralls.io/github/tnovas/streamLabs?branch=master)
 
-You need nodejs version > 7x because this Api was made with ES6.
+You need nodejs version > 6x because this Api was made with ES6.
 ```
 node --version
 ```
@@ -39,7 +39,7 @@ streamLabs.connect(code);
 ```
 
 ## Get Donations:
-For get donations you have to make a call 'getDonations' with limit of collection
+For get donations you have to make a call `getDonations` with limit of collection
 
 ```
 function getDonations(donations) {
