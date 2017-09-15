@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/tnovas/streamLabs.svg?branch=master)](https://travis-ci.org/tnovas/streamLabs)
 [![Coverage Status](https://coveralls.io/repos/github/tnovas/streamLabs/badge.svg?branch=master)](https://coveralls.io/github/tnovas/streamLabs?branch=master)
 
-You need version > 7x of nodejs because this Api was make with ES6.
+You need nodejs version > 7x because this Api was made with ES6.
 ```
 node --version
 ```
@@ -19,27 +19,27 @@ npm install streamlabs --save
 var streamLabsApi = require('streamlabs');
 ```
 
-Pass to constructor as credentials of StreamLabs: `ClientId` `ClientSecret` `RedirectUrl` `Scopes`
+Give constructor credentials of StreamLabs: `ClientId` `ClientSecret` `RedirectUrl` `Scopes`
 
 ```
 var streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://redirecturl/', 'scopes');
 ```
 
-# Autorization
-After use Api you need autenticate with StreamLabs for that you will get url of autorization:
+# Authorization
+After using Stream Labs you will need to autenticate with StreamLabs, for that you will get url of authorization:
 
 ```
-var urlAutorization = streamLabs.autorizationUrl();
+var urlAuthorization = streamLabs.authorizationUrl();
 ```
 
-You make a request on `urlAutorization` with a browser and autorizate in Stream Labs, and you will redirect to `RedirectUrl` and get a `Code` on QueryString `?code='hjqweassxzass'` and call `connect` with `code` on Api
+You have to make a request on `urlAuthorization` with a browser and authorizate in Stream Labs, and you will be redirect to `RedirectUrl` and get a `Code` on QueryString `?code='hjqweassxzass'` and call `connect` with `code` on Api
 
 ```
 streamLabs.connect(code);
 ```
 
 # Get Donations:
-For get donations you make a call 'getDonations' with limit of collection
+For get donations you have to make a call 'getDonations' with limit of collection
 
 ```
 function getDonations(donations) {
