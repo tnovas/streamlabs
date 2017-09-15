@@ -25,8 +25,8 @@ Give constructor credentials of StreamLabs: `ClientId` `ClientSecret` `RedirectU
 var streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://redirecturl/', 'scopes');
 ```
 
-# Authorization
-After using Stream Labs you will need to autenticate with StreamLabs, for that you will get url of authorization:
+## Authorization
+After using Stream Labs you will need to authenticate with StreamLabs, for that you will get url of authorization:
 
 ```
 var urlAuthorization = streamLabs.authorizationUrl();
@@ -38,7 +38,7 @@ You have to make a request on `urlAuthorization` with a browser and authorizate 
 streamLabs.connect(code);
 ```
 
-# Get Donations:
+## Get Donations:
 For get donations you have to make a call 'getDonations' with limit of collection
 
 ```
@@ -49,4 +49,4 @@ function getDonations(donations) {
 streamLabs.getDonations(10, getDonations);
 ```
 
-# Add Donation:
+## Add Donation:
