@@ -1,17 +1,19 @@
 var request = require('request-promise');
 
 class StreamLabs {
+
 	constructor(clientId, clientSecret, redirectUrl, scopes) {
-		this._credentials = {
+		this.__credentials = {
 			clientId: clientId,
 			clientSecret: clientSecret,
 			redirectUrl: redirectUrl,
 			scopes: scopes,
 			accessToken: '',
-			refreshToken: ''
+			refreshToken: '',
+			socketToken: ''
 		};
 		
-		this._urlApi = {
+		this.__urlApi = {
 			base: 'https://www.streamlabs.com/api/v1.0/',
 			autorizate: 'authorize',
 			accessTokenPath: 'token',
@@ -22,38 +24,57 @@ class StreamLabs {
 	}
 
 	autorizationUrl() {
-		return `${this._urlApi.base}${this._urlApi.autorizate}?client_id=${this._credentials.clientId}&redirect_uri=${this._credentials.redirectUrl}&response_type=code&scope=${this._credentials.scopes}`;
+		return `${this.__urlApi.base}${this.__urlApi.autorizate}?client_id=${this.__credentials.clientId}&redirect__uri=${this.__credentials.redirectUrl}&response_type=code&scope=${this.__credentials.scopes}`;
 	}
 
 	connect(code) {
-		let url = this._urlApi.base + this._urlApi.accessTokenPath;
+		let url = this.__urlApi.base + this.__urlApi.accessTokenPath;
 		let body = {
-			grant_type: 'authorization_code',
-			client_id: this._credentials.clientId,
-			client_secret: this._credentials.clientSecret,
-			redirect_uri: this._credentials.redirectUrl,
+			grant_type: 'authorization__code',
+			client_id: this.__credentials.clientId,
+			client_secret: this.__credentials.clientSecret,
+			redirect__uri: this.__credentials.redirectUrl,
 			code: code
 		};
 
-		this._post(url, body, (result) => {
-			this._credentials.accessToken = result.access_token;
-			this._credentials.refreshToken = result.refresh_token;
+		this.__post(url, body, (result) => {
+			this.__credentials.accessToken = result.access_token;
+			this.__credentials.refreshToken = result.refresh_token;
 	    });
 	}
 
 	getDonations(limit, callback) {
-		let url = this._urlApi.base + this._urlApi.donations;
+		let url = this.__urlApi.base + this.__urlApi.donations;
 		let qs = {
-			access_token: this._credentials.accessToken,
+			access_token: this.__credentials.accessToken,
 			limit: limit,
 			currency: 'USD',
 			verified: false
 		};
 
-		this._get(url, qs, callback);
+		this.__get(url, qs, callback);
 	}
 
-	_get(url, qs, callback) {
+	addDonation(donation, callback) {
+		let url = this.__urlApi.base + this.__urlApi.donations;
+		donation.access_token = this.__credentials.accessToken;
+
+		this.__post(url, donation, callback);
+	}
+
+	getSocketToken(callback) {
+		let url = this.__urlApi.base + this.__urlApi.accessSocketTokenPath;
+		let qs = {
+		 access_token: this.__credentials.accessToken
+		};
+
+		this.__get(url, qs, (result) => {
+			this.__credentials.socketToken = result.socket_token; 
+			callback(result);
+		});
+	}
+
+	__get(url, qs, callback) {
 		request({
 		    method: 'GET',
 		    url: url,
@@ -66,7 +87,7 @@ class StreamLabs {
 	    });
 	}
 
-	_post(url, body, callback) {
+	__post(url, body, callback) {
 		request({
 		    method: 'POST',
 		    uri: url,

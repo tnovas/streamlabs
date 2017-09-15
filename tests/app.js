@@ -23,17 +23,10 @@ describe('StreamLabs', function() {
 			redirectUrl: "redirectUrl",
 			scopes: "scopes",
 			accessToken: '',
-			refreshToken: ''
+			refreshToken: '',
+			socketToken: ''
 		};
-		
-		expect(JSON.stringify(streamLabs._credentials)).to.equal(JSON.stringify(credentials));
-	});
 
-	it('autorizationUrl() should return Url of autorization', function() {
-		expect(streamLabs.autorizationUrl()).to.equal("https://www.streamlabs.com/api/v1.0/authorize?client_id=clientId&redirect_uri=redirectUrl&response_type=code&scope=scopes");
-	});
-
-	it('urlApi should return Urls base of StreamLabs', function() {
 		var urlApi = {
 			base: 'https://www.streamlabs.com/api/v1.0/',
 			autorizate: 'authorize',
@@ -42,7 +35,13 @@ describe('StreamLabs', function() {
 			donations: 'donations',
 			alerts: 'alerts'
 		}
-		expect(JSON.stringify(streamLabs._urlApi)).to.equal(JSON.stringify(urlApi));
+		
+		expect(JSON.stringify(streamLabs.__credentials)).to.equal(JSON.stringify(credentials));
+		expect(JSON.stringify(streamLabs.__urlApi)).to.equal(JSON.stringify(urlApi));
+	});
+
+	it('autorizationUrl() should return Url of autorization', function() {
+		expect(streamLabs.autorizationUrl()).to.equal("https://www.streamlabs.com/api/v1.0/authorize?client_id=clientId&redirect__uri=redirectUrl&response_type=code&scope=scopes");
 	});
 
 	it('connect() should connect to Api StreamLabs and set credentials access token', function() {
@@ -55,21 +54,27 @@ describe('StreamLabs', function() {
 		var interval = setInterval(function(){
 			if (scope.isDone()) {
 				clearInterval(interval);
-				expect(streamLabs._credentials.accessToken).to.equal("token");
+				expect(streamLabs.__credentials.accessToken).to.equal("token");
 			}
 
 		}, 1000)
 	});
 
 	it('addDonation() should add donation on StreamLabs and return Id Donation', function() {
-		
+		var scope = nock('https://www.streamlabs.com')
+                .post('/api/v1.0/donations')
+                .reply(200, {id: 1});
+
+		streamLabs.addDonation({}, function(result) {
+			expect(result.id).to.equal(1);
+		});
 	});
 
 	it('getDonations() should get donations', function(){
 		var scope = nock('https://www.streamlabs.com')
                 .get('/api/v1.0/donations')
                 .query({
-						access_token: streamLabs._credentials.accessToken,
+						access_token: streamLabs.__credentials.accessToken,
   					 	limit: 2,
   						currency: 'USD',
   						verified: false
@@ -78,6 +83,19 @@ describe('StreamLabs', function() {
 
 		streamLabs.getDonations(2, function(result) {
 			expect(result.donation).to.equal(2);
+		});
+	});
+
+	it('getSocketToken() should get token for websocket', function(){
+		var scope = nock('https://www.streamlabs.com')
+                .get('/api/v1.0/socket/token')
+                .query({
+				 	access_token: streamLabs.__credentials.accessToken
+				})
+                .reply(200, {socket_token: "token"});
+
+		streamLabs.getSocketToken(function(result) {
+			expect(result.socket_token).to.equal("token");
 		});
 	})
 });
