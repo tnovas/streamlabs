@@ -50,3 +50,24 @@ streamLabs.getDonations(10, getDonations);
 ```
 
 ## Add Donation:
+For add donations you have to make a call `addDonations` with object params
+```
+{
+	name: 'Name of user donation',
+	identifier: 'Identify user',
+	amount: 'Amount',
+	currency: 'USD',
+	message: 'A message'	
+}
+```
+
+## Get Credentials:
+If you need save credentials call `getCredentials` and get an object with
+
+```
+{
+	accessToken
+	refreshToken
+	socketToken
+}
+```
