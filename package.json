@@ -15,9 +15,6 @@
     "sinon": "^3.2.1"
   },
   "dependencies": {
-    "node-debugger": "^1.0.0",
-    "node-pre-gyp": "^0.6.37",
-    "nodejs": "0.0.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.1"
   }
