@@ -20,7 +20,7 @@ class StreamLabs {
 			accessSocketTokenPath: 'socket/token',
 			donations: 'donations',
 			alerts: 'alerts'
-		}
+		};
 	}
 
 	autorizationUrl() {

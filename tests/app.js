@@ -34,7 +34,7 @@ describe('StreamLabs', function() {
 			accessSocketTokenPath: 'socket/token',
 			donations: 'donations',
 			alerts: 'alerts'
-		}
+		};
 		
 		expect(JSON.stringify(streamLabs.__credentials)).to.equal(JSON.stringify(credentials));
 		expect(JSON.stringify(streamLabs.__urlApi)).to.equal(JSON.stringify(urlApi));
