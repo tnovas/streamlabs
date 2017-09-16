@@ -72,7 +72,7 @@ If you need to save credentials, you have to call `getCredentials` and you will 
 }
 ```
 
-## Get alerts real time:
+### Get alerts real time:
 For get alerts on real time you have to call `connectWebSocket` and you will get a token, it should be used on WebSocket in the client
 ```
 Server Side
