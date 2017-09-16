@@ -72,8 +72,8 @@ If you need save credentials call `getCredentials` and get an object with
 }
 ```
 
-## Get alerts on realtime:
-For get alerts on realtime you have make a call to `connectWebSocket` and will return a token and should be use in url WebSocket in the client
+## Get alerts realtime:
+For get alerts realtime you have make a call to `connectWebSocket` and will return a token and should be use in url WebSocket in the client
 ```
 Server Side
 streamLabs.connectWebSocket((socketToken) => return socketToken);
