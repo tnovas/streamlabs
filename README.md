@@ -22,7 +22,7 @@ var streamLabsApi = require('streamlabs');
 Give the credentials of the StreamLabs to the constructor: `ClientId` `ClientSecret` `RedirectUrl` `Scopes`
 
 ```
-var streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://redirecturl/', 'scopes');
+var streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://redirecturl/', 'donations.read donations.create alerts.create');
 ```
 
 ### Authorization
