@@ -26,13 +26,13 @@ var streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://redirectu
 ```
 
 ### Authorization
-After using Stream Labs you will need to authenticate it with StreamLabs, for that you will get an url of authorization:
+After using StreamLabs you will need to authenticate it with StreamLabs, for that you will get an url of authorization:
 
 ```
 var urlAuthorization = streamLabs.authorizationUrl();
 ```
 
-You have to make a request on `urlAuthorization` with a browser and authorizate in Stream Labs. After that you will be redirect to `RedirectUrl` and you will get a `Code` on QueryString `?code='hjqweassxzass'` , then you have to call `connect` with `code` to Api
+You have to make a request on `urlAuthorization` with a browser and authorizate in StreamLabs. After that you will be redirect to `RedirectUrl` and you will get a `Code` on QueryString `?code='hjqweassxzass'` , then you have to call `connect` with `code` to Api
 
 ```
 streamLabs.connect(code);
