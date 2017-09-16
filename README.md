@@ -19,27 +19,27 @@ npm install streamlabs --save
 var streamLabsApi = require('streamlabs');
 ```
 
-Give constructor credentials of StreamLabs: `ClientId` `ClientSecret` `RedirectUrl` `Scopes`
+Give the credentials of the StreamLabs to the constructor: `ClientId` `ClientSecret` `RedirectUrl` `Scopes`
 
 ```
 var streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://redirecturl/', 'scopes');
 ```
 
 ## Authorization
-After using Stream Labs you will need to authenticate with StreamLabs, for that you will get url of authorization:
+After using Stream Labs you will need to authenticate it with StreamLabs, for that you will get an url of authorization:
 
 ```
 var urlAuthorization = streamLabs.authorizationUrl();
 ```
 
-You have to make a request on `urlAuthorization` with a browser and authorizate in Stream Labs, and you will be redirect to `RedirectUrl` and get a `Code` on QueryString `?code='hjqweassxzass'` and call `connect` with `code` on Api
+You have to make a request on `urlAuthorization` with a browser and authorizate in Stream Labs. After that you will be redirect to `RedirectUrl` and you will get a `Code` on QueryString `?code='hjqweassxzass'` , then you have to call `connect` with `code` to Api
 
 ```
 streamLabs.connect(code);
 ```
 
 ## Get Donations:
-For get donations you have to make a call `getDonations` with limit of collection
+For get donations you have to call `getDonations` and stablish how much donations you want of the collection
 
 ```
 function getDonations(donations) {
@@ -50,7 +50,7 @@ streamLabs.getDonations(10, getDonations);
 ```
 
 ## Add Donation:
-For add donations you have make a call `addDonations` with object params
+For add donations you have to call `addDonations` and send an object params
 ```
 {
 	name: 'Name of user donation',
@@ -62,7 +62,7 @@ For add donations you have make a call `addDonations` with object params
 ```
 
 ## Get Credentials:
-If you need save credentials call `getCredentials` and get an object with
+If you need to save credentials, you have to call `getCredentials` and you will get an object
 
 ```
 {
@@ -72,8 +72,8 @@ If you need save credentials call `getCredentials` and get an object with
 }
 ```
 
-## Get alerts realtime:
-For get alerts realtime you have make a call to `connectWebSocket` and will return a token and should be use in url WebSocket in the client
+## Get alerts real time:
+For get alerts on real time you have to call `connectWebSocket` and you will get a token, it should be used on WebSocket in the client
 ```
 Server Side
 streamLabs.connectWebSocket((socketToken) => return socketToken);
