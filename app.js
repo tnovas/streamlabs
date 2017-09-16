@@ -35,7 +35,7 @@ class StreamLabs {
 		}
 	}
 
-	connect(code, errCallback) {
+	connect(code, error) {
 		let url = this.__urlApi.base + this.__urlApi.accessTokenPath;
 		let body = {
 			grant_type: 'authorization__code',
@@ -48,10 +48,10 @@ class StreamLabs {
 		this.__post(url, body, (result) => {
 			this.__credentials.accessToken = result.access_token;
 			this.__credentials.refreshToken = result.refresh_token;
-	    }, errCallback);
+	    }, error);
 	}
 
-	getDonations(limit, callback, errCallback) {
+	getDonations(limit, success, error) {
 		let url = this.__urlApi.base + this.__urlApi.donations;
 		let qs = {
 			access_token: this.__credentials.accessToken,
@@ -60,17 +60,17 @@ class StreamLabs {
 			verified: false
 		};
 
-		this.__get(url, qs, callback, errCallback);
+		this.__get(url, qs, success, error);
 	}
 
-	addDonation(donation, callback, errCallback) {
+	addDonation(donation, success, error) {
 		let url = this.__urlApi.base + this.__urlApi.donations;
 		donation.access_token = this.__credentials.accessToken;
 
-		this.__post(url, donation, callback, errCallback);
+		this.__post(url, donation, success, error);
 	}
 
-	getSocketToken(callback, errCallback) {
+	connectWebSocket(success, error) {
 		let url = this.__urlApi.base + this.__urlApi.accessSocketTokenPath;
 		let qs = {
 		 access_token: this.__credentials.accessToken
@@ -78,30 +78,30 @@ class StreamLabs {
 
 		this.__get(url, qs, (result) => {
 			this.__credentials.socketToken = result.socket_token; 
-			callback(result);
-		}, errCallback);
+			success(result.socket_token);
+		}, error);
 	}
 
-	__get(url, qs, callback, errCallback) {
+	__get(url, qs, success, error) {
 		request({
 		    method: 'GET',
 		    url: url,
 		    qs: qs,
 		    json: true
 		})
-		.then(callback)
-	    .catch(errCallback);
+		.then(success)
+	    .catch(error);
 	}
 
-	__post(url, body, callback, errCallback) {
+	__post(url, body, success, error) {
 		request({
 		    method: 'POST',
 		    uri: url,
 		    body: body,
 		    json: true
 		})
-		.then(callback)
-	    .catch(errCallback);
+		.then(success)
+	    .catch(error);
 	}
 }
 

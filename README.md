@@ -50,7 +50,7 @@ streamLabs.getDonations(10, getDonations);
 ```
 
 ## Add Donation:
-For add donations you have to make a call `addDonations` with object params
+For add donations you have make a call `addDonations` with object params
 ```
 {
 	name: 'Name of user donation',
@@ -70,4 +70,15 @@ If you need save credentials call `getCredentials` and get an object with
 	refreshToken
 	socketToken
 }
+```
+
+## Get alerts on realtime:
+For get alerts on realtime you have make a call to `connectWebSocket` and will return a token and should be use in url WebSocket in the client
+```
+Server Side
+streamLabs.connectWebSocket((socketToken) => return socketToken);
+
+Client Side
+var socket = io('https://sockets.streamlabs.com?token=' + socketToken);
+socket.on('event', (eventData) => console.log(eventData));
 ```

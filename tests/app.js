@@ -94,15 +94,15 @@ describe('StreamLabs', function() {
 		});
 	});
 
-	it('getSocketToken() should get error', function(){
+	it('connectWebSocket() should get error', function(){
 		var scope = nock('https://www.streamlabs.com')
                 .get('/api/v1.0/socket/token')
                 .reply(500);
 
-		streamLabs.getSocketToken(() => {}, () => {});
+		streamLabs.connectWebSocket(() => {}, () => {});
 	});
 
-	it('getSocketToken() should get token for websocket', function(){
+	it('connectWebSocket() should get token for websocket', function(){
 		var scope = nock('https://www.streamlabs.com')
                 .get('/api/v1.0/socket/token')
                 .query({
@@ -110,8 +110,8 @@ describe('StreamLabs', function() {
 				})
                 .reply(200, {socket_token: "token"});
 
-		streamLabs.getSocketToken(function(result) {
-			expect(result.socket_token).to.equal("token");
+		streamLabs.connectWebSocket(function(result) {
+			expect(result).to.equal("token");
 		});
 	});
 
