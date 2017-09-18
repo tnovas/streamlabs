@@ -16,20 +16,20 @@ npm install streamlabs --save
 
 ## Usage:
 ```
-var streamLabsApi = require('streamlabs');
+import streamLabsApi from 'streamlabs';
 ```
 
 Give the credentials of the StreamLabs to the constructor: `ClientId` `ClientSecret` `RedirectUrl` `Scopes`
 
 ```
-var streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://redirecturl/', 'donations.read donations.create alerts.create');
+let streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://redirecturl/', 'donations.read donations.create alerts.create');
 ```
 
 ### Authorization
 After using StreamLabs you will need to authenticate it with StreamLabs, for that you will get an url of authorization:
 
 ```
-var urlAuthorization = streamLabs.authorizationUrl();
+let urlAuthorization = streamLabs.authorizationUrl();
 ```
 
 You have to make a request on `urlAuthorization` with a browser and authorizate in StreamLabs. After that you will be redirect to `RedirectUrl` and you will get a `Code` on QueryString `?code='hjqweassxzass'` , then you have to call `connect` with `code` to Api
@@ -42,11 +42,7 @@ streamLabs.connect(code);
 For get donations you have to call `getDonations` and stablish how much donations you want of the collection
 
 ```
-function getDonations(donations) {
-	console.log(donations);
-}
-
-streamLabs.getDonations(10, getDonations);
+streamLabs.getDonations(10, (donation) => console.log(donations));
 ```
 
 ### Add Donation:
@@ -68,7 +64,7 @@ Server Side
 streamLabs.connectWebSocket((socketToken) => return socketToken);
 
 Client Side
-var socket = io('https://sockets.streamlabs.com?token=' + socketToken);
+let socket = io('https://sockets.streamlabs.com?token=' + socketToken);
 socket.on('event', (eventData) => console.log(eventData));
 ```
 
