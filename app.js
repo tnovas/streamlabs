@@ -1,4 +1,4 @@
-import request from 'request-promise';
+let request = require('request-promise');
 
 class StreamLabs {
 
