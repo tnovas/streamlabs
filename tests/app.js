@@ -41,7 +41,7 @@ describe('StreamLabs', function() {
 	});
 
 	it('authorizationUrl() should return Url of authorization', function() {
-		expect(streamLabs.authorizationUrl()).to.equal("https://www.streamlabs.com/api/v1.0/authorize?client_id=clientId&redirect__uri=redirectUrl&response_type=code&scope=scopes");
+		expect(streamLabs.authorizationUrl()).to.equal("https://www.streamlabs.com/api/v1.0/authorize?client_id=clientId&redirect_uri=redirectUrl&response_type=code&scope=scopes");
 	});
 
 	it('connect() should connect to Api StreamLabs and set credentials access token', function() {
@@ -49,15 +49,7 @@ describe('StreamLabs', function() {
                 .post('/api/v1.0/token')
                 .reply(200, {access_token: 'token', refresh_token: 'token'});
 
-		streamLabs.connect('code');
-
-		var interval = setInterval(function(){
-			if (scope.isDone()) {
-				clearInterval(interval);
-				expect(streamLabs.__credentials.accessToken).to.equal("token");
-			}
-
-		}, 1000)
+		streamLabs.connect('code', () => expect(streamLabs.__credentials.accessToken).to.equal("token"));
 	});
 
 	it('addDonation() should get Error', function() {
@@ -73,9 +65,7 @@ describe('StreamLabs', function() {
                 .post('/api/v1.0/donations')
                 .reply(200, {id: 1});
 
-		streamLabs.addDonation({}, function(result) {
-			expect(result.id).to.equal(1);
-		});
+		streamLabs.addDonation({}, (result) =>	expect(result.id).to.equal(1));
 	});
 
 	it('getDonations() should get donations', function(){
@@ -89,9 +79,7 @@ describe('StreamLabs', function() {
 				  })
                 .reply(200, {donation: 2});
 
-		streamLabs.getDonations(2, function(result) {
-			expect(result.donation).to.equal(2);
-		});
+		streamLabs.getDonations(2, (result) => expect(result.donation).to.equal(2));
 	});
 
 	it('connectWebSocket() should get error', function(){
@@ -110,9 +98,7 @@ describe('StreamLabs', function() {
 				})
                 .reply(200, {socket_token: "token"});
 
-		streamLabs.connectWebSocket(function(result) {
-			expect(result).to.equal("token");
-		});
+		streamLabs.connectWebSocket((result) => expect(result).to.equal("token"));
 	});
 
 	it('getCredentials() should get credentials', function() {
