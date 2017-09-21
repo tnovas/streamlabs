@@ -8,7 +8,7 @@
       "url" : "https://github.com/tnovas/streamlabs"
     },
   "email" : "tnovas@gmail.com",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Api StreamLabs",
   "main": "app.js",
   "scripts": {
