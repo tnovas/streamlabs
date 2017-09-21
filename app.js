@@ -1,4 +1,4 @@
-var request = require('request-promise');
+let request = require('request-promise');
 
 class StreamLabs {
 
@@ -24,7 +24,7 @@ class StreamLabs {
 	}
 
 	authorizationUrl() {
-		return `${this.__urlApi.base}${this.__urlApi.authorizate}?client_id=${this.__credentials.clientId}&redirect__uri=${this.__credentials.redirectUrl}&response_type=code&scope=${this.__credentials.scopes}`;
+		return `${this.__urlApi.base}${this.__urlApi.authorizate}?client_id=${this.__credentials.clientId}&redirect_uri=${this.__credentials.redirectUrl}&response_type=code&scope=${this.__credentials.scopes}`;
 	}
 
 	getCredentials() {
@@ -35,19 +35,20 @@ class StreamLabs {
 		}
 	}
 
-	connect(code, error) {
+	connect(code, success, error) {
 		let url = this.__urlApi.base + this.__urlApi.accessTokenPath;
 		let body = {
-			grant_type: 'authorization__code',
+			grant_type: 'authorization_code',
 			client_id: this.__credentials.clientId,
 			client_secret: this.__credentials.clientSecret,
-			redirect__uri: this.__credentials.redirectUrl,
+			redirect_uri: this.__credentials.redirectUrl,
 			code: code
 		};
 
 		this.__post(url, body, (result) => {
 			this.__credentials.accessToken = result.access_token;
 			this.__credentials.refreshToken = result.refresh_token;
+			success();
 	    }, error);
 	}
 

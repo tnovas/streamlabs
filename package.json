@@ -1,14 +1,20 @@
 {
   "name": "streamlabs",
-  "version": "1.0.1",
+  "author": "Tomas Novas",
+  "url" : "https://github.com/tnovas/streamlabs",
+  "repository" :
+    { 
+      "type" : "git",
+      "url" : "https://github.com/tnovas/streamlabs"
+    },
+  "email" : "tnovas@gmail.com",
+  "version": "1.0.5",
   "description": "Api StreamLabs",
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/app.js",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
-  "author": "Tomas Novas",
-  "license": "ISC",
   "devDependencies": {
     "chai": "^4.1.2",
     "coveralls": "^2.13.1",

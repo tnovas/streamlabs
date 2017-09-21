@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/tnovas/streamLabs.svg?branch=master)](https://travis-ci.org/tnovas/streamLabs)
 [![Coverage Status](https://coveralls.io/repos/github/tnovas/streamLabs/badge.svg)](https://coveralls.io/github/tnovas/streamLabs)
 
-You need nodejs version > 6x because this Api was made with ES6.
+You need nodejs version > 6x because this module was made with ES6.
 ```
 node --version
 ```
@@ -32,21 +32,17 @@ After using StreamLabs you will need to authenticate it with StreamLabs, for tha
 let urlAuthorization = streamLabs.authorizationUrl();
 ```
 
-You have to make a request on `urlAuthorization` with a browser and authorizate in StreamLabs. After that you will be redirect to `RedirectUrl` and you will get a `Code` on QueryString `?code='hjqweassxzass'` , then you have to call `connect` with `code` to Api
+You have to make a request on `urlAuthorization` with a browser and authorizate in StreamLabs. After that you will be redirect to `RedirectUrl` and you will get a `Code` on QueryString `?code='hjqweassxzass'` , then you have to call `connect` with `code` and `callback` to module
 
 ```js
-streamLabs.connect(code);
+streamLabs.connect(code, callback);
 ```
 
 ### Get Donations:
 For get donations you have to call `getDonations` and stablish how much donations you want of the collection
 
 ```js
-function getDonations(donations) {
-  console.log(donations);
-}
-
-streamLabs.getDonations(10, getDonations);
+streamLabs.getDonations(10, (donation) => console.log(donations));
 ```
 
 ### Add Donation:
@@ -68,7 +64,7 @@ Server Side
 streamLabs.connectWebSocket((socketToken) => return socketToken);
 
 Client Side
-var socket = io('https://sockets.streamlabs.com?token=' + socketToken);
+let socket = io('https://sockets.streamlabs.com?token=' + socketToken);
 socket.on('event', (eventData) => console.log(eventData));
 ```
 
