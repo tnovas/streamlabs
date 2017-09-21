@@ -61,7 +61,7 @@ For add donations you have to call `addDonations` and send an object params
 For get alerts on real time you have to call `connectWebSocket` and you will get a token, it should be used on WebSocket in the client
 ```js
 Server Side
-streamLabs.connectWebSocket((socketToken) => return socketToken);
+streamLabs.connectWebSocket((socketToken) => socketToken);
 
 Client Side
 let socket = io('https://sockets.streamlabs.com?token=' + socketToken);

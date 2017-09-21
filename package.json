@@ -8,8 +8,8 @@
       "url" : "https://github.com/tnovas/streamlabs"
     },
   "email" : "tnovas@gmail.com",
-  "version": "1.0.7",
-  "description": "Api StreamLabs",
+  "version": "1.0.8",
+  "description": "This module use Streamlabs API https://streamlabs.com/",
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/app.js",
