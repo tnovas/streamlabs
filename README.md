@@ -78,3 +78,5 @@ If you need to save credentials, you have to call `getCredentials` and you will 
   socketToken
 }
 ```
+
+You can send these credentials to the constructor and use any function without call Authorization

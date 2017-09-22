@@ -2,15 +2,15 @@ let request = require('request-promise');
 
 class StreamLabs {
 
-	constructor(clientId, clientSecret, redirectUrl, scopes) {
+	constructor(clientId, clientSecret, redirectUrl, scopes, accessToken='', refreshToken='', socketToken='') {
 		this.__credentials = {
 			clientId: clientId,
 			clientSecret: clientSecret,
 			redirectUrl: redirectUrl,
 			scopes: scopes,
-			accessToken: '',
-			refreshToken: '',
-			socketToken: ''
+			accessToken: accessToken,
+			refreshToken: refreshToken,
+			socketToken: socketToken
 		};
 		
 		this.__urlApi = {
