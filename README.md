@@ -19,10 +19,20 @@ npm install streamlabs --save
 let streamLabsApi = require('streamlabs');
 ```
 
-Give the credentials of the StreamLabs to the constructor: `ClientId` `ClientSecret` `RedirectUrl` `Scopes`
+Give the credentials of the StreamLabs to the constructor
+
+| Params       | Description     | Optional | 
+| --------     |:---------------| :-----:|
+| **ClientId**     | *The Client Id* | **false** |
+| **ClientSecret** | *The Client Secret* | **false** |
+| **RedirectUrl**  | *The RedirectUrl with format 'http://yourdomain/youraction'* | **false** |
+| **Scopes**       | *They are 3 scopes: donations.read donations.create alerts.create* | **false** |
+| **AccessToken**  | *The access token*  | **true** |
+| **RefreshToken** | *The refresh token* | **true** |
+| **SocketToken**  | *The socket token* | **true** |
 
 ```js
-let streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://redirecturl/', 'donations.read donations.create alerts.create');
+let streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://yourdomain/youraction', 'donations.read donations.create alerts.create');
 ```
 
 ### Authorization
@@ -32,14 +42,26 @@ After using StreamLabs you will need to authenticate it with StreamLabs, for tha
 let urlAuthorization = streamLabs.authorizationUrl();
 ```
 
-You have to make a request on `urlAuthorization` with a browser and authorizate in StreamLabs. After that you will be redirect to `RedirectUrl` and you will get a `Code` on QueryString `?code='hjqweassxzass'` , then you have to call `connect` with `code` and `callback` to module
+You have to make a request on `urlAuthorization` with a browser and authorizate in StreamLabs. After that you will be redirect to `RedirectUrl` and you will get a `Code` on QueryString `?code='hjqweassxzass'` , then you have to call `connect` with `code`
+
+| Params   | Description     | Optional | 
+| -------- |:---------------| :-----:|
+| **Code**  | *The code you got in the querystring* | **false** |
+| **Success**  | *Callback on Success*| **true** |
+| **Error**    | *Callback on Error*  | **true** |
 
 ```js
-streamLabs.connect(code, callback);
+streamLabs.connect(code);
 ```
 
 ### Get Donations:
 For get donations you have to call `getDonations` and stablish how much donations you want of the collection
+
+| Params   | Description     | Optional | 
+| -------- |:---------------| :-----:|
+| **Limit**  | *Stablish how much donations you want of the collection* | **false** |
+| **Success**  | *Callback on Success*| **true** |
+| **Error**    | *Callback on Error*  | **true** |
 
 ```js
 streamLabs.getDonations(10, (donation) => console.log(donations));
@@ -47,6 +69,13 @@ streamLabs.getDonations(10, (donation) => console.log(donations));
 
 ### Add Donation:
 For add donations you have to call `addDonations` and send an object params
+
+| Params   | Description     | Optional | 
+| -------- |:---------------| :-----:|
+| **Donation**  | *Object with <ul>  <li>Name (string)</li>  <li>Identifier (string)</li> <li>Amount (decimal)</li> <li>Currency: (string) See https://dev.streamlabs.com/docs/currency-codes</li> <li>Message (string)</li></ul>* | **false** |
+| **Success**  | *Callback on Success*| **true** |
+| **Error**    | *Callback on Error*  | **true** |
+
 ```js
 {
   name: 'Name of user donation',
@@ -59,6 +88,12 @@ For add donations you have to call `addDonations` and send an object params
 
 ### Get alerts real time:
 For get alerts on real time you have to call `connectWebSocket` and you will get a token, it should be used on WebSocket in the client
+
+| Params   | Description     | Optional | 
+| -------- |:---------------| :-----:|
+| **Success**  | *Callback on Success*| **true** |
+| **Error**    | *Callback on Error*  | **true** |
+
 ```js
 Server Side
 streamLabs.connectWebSocket((socketToken) => socketToken);
