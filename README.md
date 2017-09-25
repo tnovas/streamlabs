@@ -35,6 +35,8 @@ Give the credentials of the StreamLabs to the constructor
 let streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://yourdomain/youraction', 'donations.read donations.create alerts.create');
 ```
 
+**If you send `AccessToken` and `SocketToken` to the constructor you can call any function without call `Authorization`**
+
 ### Authorization
 After using StreamLabs you will need to authenticate it with StreamLabs, for that you will get an url of authorization:
 
@@ -113,5 +115,3 @@ If you need to save credentials, you have to call `getCredentials` and you will 
   socketToken
 }
 ```
-
-You can send these credentials to the constructor and use any function without call Authorization
