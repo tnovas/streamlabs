@@ -23,13 +23,13 @@ Give the credentials of the StreamLabs to the constructor
 
 | Params       | Description     | Optional | 
 | --------     |:---------------| :-----:|
-| **ClientId**     | *The Client Id* | [] |
-| **ClientSecret** | *The Client Secret* | [] |
-| **RedirectUrl**  | *The RedirectUrl with format 'http://yourdomain/youraction'* | [] |
-| **Scopes**       | *They are 3 scopes: donations.read donations.create alerts.create* | [] |
-| **AccessToken**  | *The access token*  | [x] |
-| **RefreshToken** | *The refresh token* | [x] |
-| **SocketToken**  | *The socket token* | [x] |
+| **ClientId**     | *The Client Id* | **false** |
+| **ClientSecret** | *The Client Secret* | **false** |
+| **RedirectUrl**  | *The RedirectUrl with format 'http://yourdomain/youraction'* | **false** |
+| **Scopes**       | *They are 3 scopes: donations.read donations.create alerts.create* | **false** |
+| **AccessToken**  | *The access token*  | **true** |
+| **RefreshToken** | *The refresh token* | **true** |
+| **SocketToken**  | *The socket token* | **true** |
 
 ```js
 let streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://yourdomain/youraction', 'donations.read donations.create alerts.create');
