@@ -72,7 +72,7 @@ For add donations you have to call `addDonations` and send an object params
 
 | Params   | Description     | Optional | 
 | -------- |:---------------| :-----:|
-| **Donation**  | *Object with <ul>  <li>Name (string)</li>  <li>Identifier (string)</li> <li>Amount (decimal)</li> <li>Currency: (string) See https://dev.streamlabs.com/docs/currency-codes</li> <li>Message (string)</li></ul>* | **false** |
+| **Donation**  | *Object with <ul>  <li>Name (string)</li>  <li>Identifier (string)</li> <li>Amount (decimal)</li> <li>Currency: (string) - See [Currency Codes](https://dev.streamlabs.com/docs/currency-codes/)</li> <li>Message (string)</li></ul>* | **false** |
 | **Success**  | *Callback on Success*| **true** |
 | **Error**    | *Callback on Error*  | **true** |
 
