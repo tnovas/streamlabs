@@ -1,108 +1,79 @@
-let request = require('request-promise');
+let axios = require('axios');
+let OAuth2 = require('oauth20');
+let credentialsST = Symbol('credentialsST');
+let urls = Symbol('urls');
+let get = Symbol('get');
+let post = Symbol('post');
 
-class StreamLabs {
+class StreamLabs extends OAuth2 {
 
 	constructor(clientId, clientSecret, redirectUrl, scopes, accessToken='', refreshToken='', socketToken='') {
-		this.__credentials = {
-			clientId: clientId,
-			clientSecret: clientSecret,
-			redirectUrl: redirectUrl,
-			scopes: scopes,
-			accessToken: accessToken,
-			refreshToken: refreshToken,
+		super(clientId, clientSecret, redirectUrl, scopes, 'https://www.streamlabs.com/api/v1.0/', 'authorize', 'token');
+		
+		this[credentialsST] = {
 			socketToken: socketToken
 		};
 		
-		this.__urlApi = {
+		this[urls] = {
 			base: 'https://www.streamlabs.com/api/v1.0/',
-			authorizate: 'authorize',
-			accessTokenPath: 'token',
-			accessSocketTokenPath: 'socket/token',
+			socketToken: 'socket/token',
 			donations: 'donations',
 			alerts: 'alerts'
 		};
-	}
 
-	authorizationUrl() {
-		return `${this.__urlApi.base}${this.__urlApi.authorizate}?client_id=${this.__credentials.clientId}&redirect_uri=${this.__credentials.redirectUrl}&response_type=code&scope=${this.__credentials.scopes}`;
+		axios.defaults.baseurl = this[urls].base;
 	}
 
 	getCredentials() {
-		return {
-			accessToken: this.__credentials.accessToken,
-			refreshToken: this.__credentials.refreshToken,
-			socketToken: this.__credentials.socketToken
-		}
+		let credentials = super.getCredentials();
+		credentials.socketToken = this[credentialsST].socketToken;
+		return credentials;
 	}
 
-	connect(code, success, error) {
-		let url = this.__urlApi.base + this.__urlApi.accessTokenPath;
-		let body = {
-			grant_type: 'authorization_code',
-			client_id: this.__credentials.clientId,
-			client_secret: this.__credentials.clientSecret,
-			redirect_uri: this.__credentials.redirectUrl,
-			code: code
-		};
-
-		this.__post(url, body, (result) => {
-			this.__credentials.accessToken = result.access_token;
-			this.__credentials.refreshToken = result.refresh_token;
-			success();
-	    }, error);
-	}
-
-	getDonations(limit, success, error) {
-		let url = this.__urlApi.base + this.__urlApi.donations;
-		let qs = {
-			access_token: this.__credentials.accessToken,
+	getDonations(limit) {
+		let url = this[urls].donations;
+		let params = {
+			access_token: this.getCredentials().accessToken,
 			limit: limit,
 			currency: 'USD',
 			verified: false
 		};
 
-		this.__get(url, qs, success, error);
+		return this[get](url, params);
 	}
 
-	addDonation(donation, success, error) {
-		let url = this.__urlApi.base + this.__urlApi.donations;
-		donation.access_token = this.__credentials.accessToken;
+	addDonation(donation) {
+		let url = this[urls].donations;
+		donation.access_token = this.getCredentials().accessToken;
 
-		this.__post(url, donation, success, error);
+		return this[post](url, donation);
 	}
 
-	connectWebSocket(success, error) {
-		let url = this.__urlApi.base + this.__urlApi.accessSocketTokenPath;
-		let qs = {
-		 access_token: this.__credentials.accessToken
+	connectWebSocket() {
+		let url = this[urls].socketToken;
+		let params = {
+		 access_token: this.getCredentials().accessToken
 		};
 
-		this.__get(url, qs, (result) => {
-			this.__credentials.socketToken = result.socket_token; 
-			success(result.socket_token);
-		}, error);
+		return this[get](url, params).then((result) => {
+			this[credentialsST].socketToken = result.data.socket_token; 
+		});
 	}
 
-	__get(url, qs, success, error) {
-		request({
+	[get](url, params) {
+		return axios({
 		    method: 'GET',
 		    url: url,
-		    qs: qs,
-		    json: true
-		})
-		.then(success)
-	    .catch(error);
+		    params: params
+		});
 	}
 
-	__post(url, body, success, error) {
-		request({
+	[post](url, data) {
+		return axios({
 		    method: 'POST',
-		    uri: url,
-		    body: body,
-		    json: true
-		})
-		.then(success)
-	    .catch(error);
+		    url: url,
+		    data: data
+		});
 	}
 }
 

@@ -49,8 +49,6 @@ You have to make a request on `urlAuthorization` with a browser and authorizate 
 | Params   | Description     | Optional | 
 | -------- |:---------------| :-----:|
 | **Code**  | *The code you got in the querystring* | **false** |
-| **Success**  | *Callback on Success*| **true** |
-| **Error**    | *Callback on Error*  | **true** |
 
 ```js
 streamLabs.connect(code);
@@ -62,11 +60,9 @@ For get donations you have to call `getDonations` and stablish how much donation
 | Params   | Description     | Optional | 
 | -------- |:---------------| :-----:|
 | **Limit**  | *Stablish how much donations you want of the collection* | **false** |
-| **Success**  | *Callback on Success*| **true** |
-| **Error**    | *Callback on Error*  | **true** |
 
 ```js
-streamLabs.getDonations(10, (donation) => console.log(donations));
+streamLabs.getDonations(10);
 ```
 
 ### Add Donation:
@@ -75,8 +71,6 @@ For add donations you have to call `addDonations` and send an object params
 | Params   | Description     | Optional | 
 | -------- |:---------------| :-----:|
 | **Donation**  | *Object with <ul>  <li>Name (string)</li>  <li>Identifier (string)</li> <li>Amount (decimal)</li> <li>Currency: (string) - See [Currency Codes](https://dev.streamlabs.com/docs/currency-codes/)</li> <li>Message (string)</li></ul>* | **false** |
-| **Success**  | *Callback on Success*| **true** |
-| **Error**    | *Callback on Error*  | **true** |
 
 ```js
 {
@@ -91,14 +85,10 @@ For add donations you have to call `addDonations` and send an object params
 ### Get alerts real time:
 For get alerts on real time you have to call `connectWebSocket` and you will get a token, it should be used on WebSocket in the client
 
-| Params   | Description     | Optional | 
-| -------- |:---------------| :-----:|
-| **Success**  | *Callback on Success*| **true** |
-| **Error**    | *Callback on Error*  | **true** |
-
 ```js
 Server Side
-streamLabs.connectWebSocket((socketToken) => socketToken);
+streamLabs.connectWebSocket();
+let socketToken = streamLabs.getCredentials().socketToken;
 
 Client Side
 let socket = io('https://sockets.streamlabs.com?token=' + socketToken);
@@ -114,4 +104,12 @@ If you need to save credentials, you have to call `getCredentials` and you will 
   refreshToken
   socketToken
 }
+```
+
+### Promises
+If you add `then` to call you will take the success of response and if you add `catch` you will take the error of response.
+```js
+streamLabs.getDonations(10)
+	.then((res) => console.log(res)))
+	.catch((err) => console.log(err)))
 ```

@@ -1,13 +1,12 @@
 {
   "name": "streamlabs",
   "author": "Tomas Novas",
-  "url" : "https://github.com/tnovas/streamlabs",
-  "repository" :
-    { 
-      "type" : "git",
-      "url" : "https://github.com/tnovas/streamlabs"
-    },
-  "email" : "tnovas@gmail.com",
+  "url": "https://github.com/tnovas/streamlabs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tnovas/streamlabs"
+  },
+  "email": "tnovas@gmail.com",
   "version": "1.0.10",
   "description": "This module use Streamlabs API https://streamlabs.com/",
   "main": "app.js",
@@ -16,14 +15,15 @@
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.9.0",
     "chai": "^4.1.2",
-    "coveralls": "^2.13.1",
+    "coveralls": "^2.13.3",
     "istanbul": "^0.4.5",
-    "mocha": "^3.5.3",
-    "nock": "^9.0.14"
+    "mocha": "^3.5.3"
   },
   "dependencies": {
-    "request": "^2.81.0",
-    "request-promise": "^4.2.1"
+    "axios": "^0.16.2",
+    "oauth20": "^1.0.5",
+    "request": "^2.83.0"
   }
 }
