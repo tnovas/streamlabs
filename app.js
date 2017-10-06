@@ -8,7 +8,9 @@ let post = Symbol('post');
 class StreamLabs extends OAuth2 {
 
 	constructor(clientId, clientSecret, redirectUrl, scopes, accessToken='', refreshToken='', socketToken='') {
-		super(clientId, clientSecret, redirectUrl, scopes, 'https://www.streamlabs.com/api/v1.0/', 'authorize', 'token');
+		super(clientId, clientSecret, redirectUrl, scopes, 
+			'https://www.streamlabs.com/api/v1.0/', 'authorize', 'token',
+			accessToken, refreshToken);
 		
 		this[credentialsST] = {
 			socketToken: socketToken
@@ -21,7 +23,7 @@ class StreamLabs extends OAuth2 {
 			alerts: 'alerts'
 		};
 
-		axios.defaults.baseurl = this[urls].base;
+		axios.defaults.baseURL = this[urls].base;
 	}
 
 	getCredentials() {
@@ -57,6 +59,7 @@ class StreamLabs extends OAuth2 {
 
 		return this[get](url, params).then((result) => {
 			this[credentialsST].socketToken = result.data.socket_token; 
+			return result;
 		});
 	}
 
