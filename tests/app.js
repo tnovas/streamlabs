@@ -39,14 +39,15 @@ describe('StreamLabs', () => {
 		expect(streamlabs.authorizationUrl()).to.equal(`${urls.base}${urls.authorizate}?response_type=code&client_id=${credentials.clientId}&redirect_uri=${credentials.redirectUrl}&scope=${credentials.scopes}`)
 	);
 
-	it('connect() should connect to twitch and get accessToken with code', () => {	
+	it('connect() should connect to streamlabs and get accessToken with code', () => {	
 		var credentials = {
 			accessToken: 'token',
 			refreshToken: 'token',
+			expiresIn: 3600,
 			socketToken: ''
 		};
 		
-		mock.onPost(urls.token).replyOnce(200, {access_token: 'token', refresh_token: 'token'});
+		mock.onPost(urls.token).replyOnce(200, {access_token: 'token', refresh_token: 'token', expires_in: 3600});
 
 		streamlabs.connect('code').then(() => expect(JSON.stringify(streamlabs.getCredentials())).to.equal(JSON.stringify(credentials)));
 	});
@@ -57,6 +58,24 @@ describe('StreamLabs', () => {
 		streamlabs.connect('code').catch((err) => expect(500).to.equal(err.response.status));
 	});
 
+	it('reconnect() should reconnect to streamlabs and get accessToken with code', () => {	
+		var credentials = {
+			accessToken: 'token',
+			refreshToken: 'token',
+			expiresIn: 3600,
+			socketToken: ''
+		};
+		
+		mock.onPost(urls.token).replyOnce(200, {access_token: 'token', refresh_token: 'token', expires_in: 3600});
+
+		streamlabs.reconnect('token').then(() => expect(JSON.stringify(streamlabs.getCredentials())).to.equal(JSON.stringify(credentials)));
+	});
+
+	it('reconnect() should throw error with a message', () => {	
+		mock.onPost(urls.token).replyOnce(500, { error: 'error' });
+
+		streamlabs.reconnect('token').catch((err) => expect(500).to.equal(err.response.status));
+	});
 	
 	it('addDonation() should get Error', function() {
 		mock.onPost(urls.donations).replyOnce(500, {error: 'error'});
@@ -99,6 +118,7 @@ describe('StreamLabs', () => {
 		var credentials = {
 			accessToken: 'token',
 			refreshToken: 'token',
+			expiresIn: 3600,
 			socketToken: 'socketToken'
 		};
 

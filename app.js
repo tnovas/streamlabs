@@ -1,39 +1,40 @@
 let axios = require('axios');
 let OAuth2 = require('oauth20');
-let credentialsST = Symbol('credentialsST');
-let urls = Symbol('urls');
-let get = Symbol('get');
-let post = Symbol('post');
+let credentialsStreamLabs = Symbol('credentialsStreamLabs');
+let urlsStreamLabs = Symbol('urlsStreamLabs');
+let getStreamLabs = Symbol('getStreamLabs');
+let postStreamLabs = Symbol('postStreamLabs');
 
 class StreamLabs extends OAuth2 {
 
-	constructor(clientId, clientSecret, redirectUrl, scopes, accessToken='', refreshToken='', socketToken='') {
+	constructor(clientId, clientSecret, redirectUrl, scopes, socketToken='') {
 		super(clientId, clientSecret, redirectUrl, scopes, 
-			'https://www.streamlabs.com/api/v1.0/', 'authorize', 'token',
-			accessToken, refreshToken);
+			'https://www.streamlabs.com/api/v1.0/', 'authorize', 'token');
 		
-		this[credentialsST] = {
+		this[credentialsStreamLabs] = {
 			socketToken: socketToken
 		};
 		
-		this[urls] = {
-			base: 'https://www.streamlabs.com/api/v1.0/',
+		this[urlsStreamLabs] = {
 			socketToken: 'socket/token',
 			donations: 'donations',
 			alerts: 'alerts'
 		};
 
-		axios.defaults.baseURL = this[urls].base;
+		axios = axios.create({
+		  baseURL: 'https://www.streamlabs.com/api/v1.0/'
+		});
 	}
 
 	getCredentials() {
 		let credentials = super.getCredentials();
-		credentials.socketToken = this[credentialsST].socketToken;
+		credentials.socketToken = this[credentialsStreamLabs].socketToken;
+
 		return credentials;
 	}
 
 	getDonations(limit) {
-		let url = this[urls].donations;
+		let url = this[urlsStreamLabs].donations;
 		let params = {
 			access_token: this.getCredentials().accessToken,
 			limit: limit,
@@ -41,29 +42,29 @@ class StreamLabs extends OAuth2 {
 			verified: false
 		};
 
-		return this[get](url, params);
+		return this[getStreamLabs](url, params);
 	}
 
 	addDonation(donation) {
-		let url = this[urls].donations;
+		let url = this[urlsStreamLabs].donations;
 		donation.access_token = this.getCredentials().accessToken;
 
-		return this[post](url, donation);
+		return this[postStreamLabs](url, donation);
 	}
 
 	connectWebSocket() {
-		let url = this[urls].socketToken;
+		let url = this[urlsStreamLabs].socketToken;
 		let params = {
 		 access_token: this.getCredentials().accessToken
 		};
 
-		return this[get](url, params).then((result) => {
-			this[credentialsST].socketToken = result.data.socket_token; 
+		return this[getStreamLabs](url, params).then((result) => {
+			this[credentialsStreamLabs].socketToken = result.data.socket_token; 
 			return result;
 		});
 	}
 
-	[get](url, params) {
+	[getStreamLabs](url, params) {
 		return axios({
 		    method: 'GET',
 		    url: url,
@@ -71,7 +72,7 @@ class StreamLabs extends OAuth2 {
 		});
 	}
 
-	[post](url, data) {
+	[postStreamLabs](url, data) {
 		return axios({
 		    method: 'POST',
 		    url: url,

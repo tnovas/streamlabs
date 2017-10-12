@@ -8,7 +8,7 @@
   },
   "email": "tnovas@gmail.com",
   "version": "1.1.0",
-  "description": "This module use Streamlabs API https://streamlabs.com/",
+  "description": "This module is a implementation of Streamlabs API https://streamlabs.com/",
   "main": "app.js",
   "scripts": {
     "test": "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha tests/app.js",

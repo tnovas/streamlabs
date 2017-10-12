@@ -13,6 +13,10 @@ app.get('/connect', (req, res) => {
 	streamlabs.connect(req.query.code).then((result) => res.json(result.data)).catch((err) => res.json(err.response.data));
 });
 
+app.get('/reconnect', (req, res) => {
+	streamlabs.reconnect(streamlabs.getCredentials().refreshToken).then((result) => res.json(result.data)).catch((err) => res.json(err.response.data));
+});
+
 app.get('/connectSocket', (req, res) => {
 	streamlabs.connectWebSocket().then((result) => res.json(result.data)).catch((err) => res.json(err.response.data));
 });

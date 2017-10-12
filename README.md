@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/tnovas/streamLabs.svg?branch=master)](https://travis-ci.org/tnovas/streamLabs)
 [![Coverage Status](https://coveralls.io/repos/github/tnovas/streamLabs/badge.svg)](https://coveralls.io/github/tnovas/streamLabs)
 
+#### This module is a implementation of Streamlabs API https://dev.streamlabs.com/
+
 You need nodejs version > 6x because this module was made with ES6.
 ```
 node --version
@@ -35,16 +37,15 @@ Give the credentials of the StreamLabs to the constructor
 let streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://yourdomain/youraction', 'donations.read donations.create alerts.create socket.token');
 ```
 
-**If you send `AccessToken` and `SocketToken` to the constructor you can call any function without call [Authorization](#authorization)**
-
 ### Authorization
-After using StreamLabs you will need to authenticate it with StreamLabs, for that you will get an url of authorization:
+To authenticate with OAuth you will call `authorizationUrl` and will return an URL, you will make a request with a browser and authorizate in OAuth. After that you will be redirect to `RedirectUrl` and you will get a `code` on QueryString `?code='hjqweassxzass'`
 
 ```js
 let urlAuthorization = streamLabs.authorizationUrl();
 ```
 
-You have to make a request on `urlAuthorization` with a browser and authorizate in StreamLabs. After that you will be redirect to `RedirectUrl` and you will get a `Code` on QueryString `?code='hjqweassxzass'` , then you have to call `connect` with `code`
+### Get Access Token
+For generate an access token and refresh token you have to call `connect` with the `code` you got on QueryString
 
 | Params   | Description     | Optional | 
 | -------- |:---------------| :-----:|
@@ -52,6 +53,17 @@ You have to make a request on `urlAuthorization` with a browser and authorizate 
 
 ```js
 streamLabs.connect(code);
+```
+
+### Refresh Access Token
+If you need refresh the access token, you have to call `reconnect` and send the `refreshToken`
+
+| Params   | Description     | Optional | 
+| -------- |:---------------| :-----:|
+| **RefreshToken**  | *The refresh token you got in credentials* | **false** |
+
+```js
+streamLabs.reconnect(refreshToken);
 ```
 
 ### Get Donations:
@@ -100,8 +112,9 @@ If you need to save credentials, you have to call `getCredentials` and you will 
 
 ```js
 {
-  accessToken
-  refreshToken
+  accessToken,
+  refreshToken,
+  expiresIn,
   socketToken
 }
 ```
@@ -124,4 +137,5 @@ First change the `clientId` and `clientSecret` in `tests/integration.js` with yo
 `http://localhost:8080/addDonation` [add donations](#add-donation) and return de id
 `http://localhost:8080/credentials` [get credentials](#get-credentials)
 `http://localhost:8080/connectSocket` return the [socket token](#get-alerts-real-time)
+`http://localhost:8080/reconnect` [refresh access token](#refresh-access-token)
 
