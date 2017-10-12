@@ -132,10 +132,10 @@ You can test the module with your productive credentials.
 First change the `clientId` and `clientSecret` in `tests/integration.js` with yours credentials, open a console and run `npm start`, open browser and type `http://localhost:8080/`
 
 ### Urls:
-`http://localhost:8080/` return the url of [authorization](#authorization), copy and paste into the url of the browser
-`http://localhost:8080/getDonations?limit=2` return two [donations](#get-donations)
-`http://localhost:8080/addDonation` [add donations](#add-donation) and return de id
-`http://localhost:8080/credentials` [get credentials](#get-credentials)
-`http://localhost:8080/connectSocket` return the [socket token](#get-alerts-real-time)
-`http://localhost:8080/reconnect` [refresh access token](#refresh-access-token)
+- `http://localhost:8080/` return the url of [authorization](#authorization), copy and paste into the url of the browser
+- `http://localhost:8080/getDonations?limit=2` return two [donations](#get-donations)
+- `http://localhost:8080/addDonation` [add donations](#add-donation) and return de id
+- `http://localhost:8080/credentials` [get credentials](#get-credentials)
+- `http://localhost:8080/connectSocket` return the [socket token](#get-alerts-real-time)
+- `http://localhost:8080/reconnect` [refresh access token](#refresh-access-token)
 
