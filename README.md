@@ -29,8 +29,8 @@ Give the credentials of the StreamLabs to the constructor
 | **ClientSecret** | *The Client Secret* | **false** |
 | **RedirectUrl**  | *The RedirectUrl with format 'http://yourdomain/callback'* | **false** |
 | **Scopes**       | *They are 4 scopes: donations.read donations.create alerts.create socket.token* | **false** |
-| **AccessToken**  | *The access token if you have one* | **true** |
 | **SocketToken**  | *The socket token* | **true** |
+| **AccessToken**  | *The access token if you have one* | **true** |
 
 ```js
 let streamLabs = new streamLabsApi('clientId', 'clientSecret', 'http://yourdomain/youraction', 'donations.read donations.create alerts.create socket.token');
