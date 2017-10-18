@@ -7,9 +7,9 @@ let postStreamLabs = Symbol('postStreamLabs');
 
 class StreamLabs extends OAuth2 {
 
-	constructor(clientId, clientSecret, redirectUrl, scopes, socketToken='') {
-		super(clientId, clientSecret, redirectUrl, scopes, 
-			'https://www.streamlabs.com/api/v1.0/', 'authorize', 'token');
+	constructor(clientId, clientSecret, redirectUrl, scopes, socketToken='', accessToken='') {
+		super(clientId, clientSecret, redirectUrl, scopes, accessToken,
+			'https://www.streamlabs.com/api/v1.0/');
 		
 		this[credentialsStreamLabs] = {
 			socketToken: socketToken

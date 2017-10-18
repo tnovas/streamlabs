@@ -27,8 +27,9 @@ Give the credentials of the StreamLabs to the constructor
 | --------     |:---------------| :-----:|
 | **ClientId**     | *The Client Id* | **false** |
 | **ClientSecret** | *The Client Secret* | **false** |
-| **RedirectUrl**  | *The RedirectUrl with format 'http://yourdomain/youraction'* | **false** |
+| **RedirectUrl**  | *The RedirectUrl with format 'http://yourdomain/callback'* | **false** |
 | **Scopes**       | *They are 4 scopes: donations.read donations.create alerts.create socket.token* | **false** |
+| **AccessToken**  | *The access token if you have one* | **true** |
 | **SocketToken**  | *The socket token* | **true** |
 
 ```js
