@@ -65,7 +65,7 @@ class StreamLabs extends OAuth2 {
 	}
 
 	[getStreamLabs](url, params) {
-		return this.axiosStreamLabs.axios({
+		return this.axiosStreamLabs({
 		    method: 'GET',
 		    url: url,
 		    params: params
@@ -73,7 +73,7 @@ class StreamLabs extends OAuth2 {
 	}
 
 	[postStreamLabs](url, data) {
-		return this.axiosStreamLabs.axios({
+		return this.axiosStreamLabs({
 		    method: 'POST',
 		    url: url,
 		    data: data
