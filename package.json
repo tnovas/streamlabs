@@ -13,7 +13,7 @@
   "scripts": {
     "test": "./node_modules/.bin/jest --coverage test/**/*.spec.js",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "start": "node --inspect tests/integration.js",
+    "start": "node --inspect test/integration.js",
     "lint": "./node_modules/.bin/eslint ./**.js ./test/**/*.js"
   },
   "devDependencies": {
