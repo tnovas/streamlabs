@@ -1,13 +1,13 @@
-var StreamLabs = require('../app');
+var StreamLabs = require('..');
 var express = require('express');
 var app = express();
 
-let streamlabs = new StreamLabs(
-		"clientId", 
-		"clientSecret", 
-		"http://localhost:8080/connect", 
-		"donations.read donations.create alerts.create socket.token"
-);
+let streamlabs = new StreamLabs({
+	clientId: "MvaZuJE1VHLIr9mMSwrrbdoSZ236h4yBXxA3xSqI",
+	clientSecret: "WxO5GMuSfJkjBOMJNflb7U9d2doCuJXvmbjdoKDA",
+	redirectUrl: "http://localhost:8080/connect",
+	scopes: "donations.read donations.create alerts.create socket.token"
+});
 
 app.get('/connect', (req, res) => {
 	streamlabs.connect(req.query.code).then((result) => res.json(result.data)).catch((err) => res.json(err.response.data));
