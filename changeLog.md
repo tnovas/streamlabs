@@ -8,7 +8,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Loyalty functionality
   
 
-## [2.0.0] - 2019-08-XX
+## [2.0.0] - 2019-08-11
 ### Added
 - Params types in code
 - Async Await
