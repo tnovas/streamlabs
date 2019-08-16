@@ -3,8 +3,8 @@ var express = require('express');
 var app = express();
 
 let streamlabs = new StreamLabs({
-	clientId: "clientId",
-	clientSecret: "clientSecret",
+	clientId: "MvaZuJE1VHLIr9mMSwrrbdoSZ236h4yBXxA3xSqI",
+	clientSecret: "WxO5GMuSfJkjBOMJNflb7U9d2doCuJXvmbjdoKDA",
 	redirectUrl: "http://localhost:8080/connect",
 	scopes: "donations.read donations.create alerts.create socket.token"
 });
@@ -22,11 +22,11 @@ app.get('/connectSocket', (req, res) => {
 });
 
 app.get('/getDonations', (req, res) => {
-	streamlabs.getDonations(req.query.limit).then((result) => res.json(result.data)).catch((err) => res.json(err.response.data));
+	streamlabs.donation('get', req.query.limit).then((result) => res.json(result.data)).catch((err) => res.json(err.response.data));
 });
 
 app.get('/addDonation', (req, res) => {
-	streamlabs.addDonation({
+	streamlabs.donation('add', {
 		  name:"Fishstickslol",
 		  message:"I love Fishsticks!",
 		  identifier:"fishingthesticks@gmail.com",

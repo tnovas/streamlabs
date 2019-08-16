@@ -1,7 +1,8 @@
 const OAuth2 = require('oauth20');
 const { streamlabsAPI } = require('./lib/utils/urls');
 const { get: getCredentials, set: setCredentials, setSocketToken } = require('./lib/credentials');
-const { add: addDonation, get: getDonations } = require('./lib/donations');
+const { call: donations } = require('./lib/donations');
+const { call: alerts } = require('./lib/alerts');
 const webSocket = require('./lib/socket');
 
 /**
@@ -22,8 +23,7 @@ class Streamlabs extends OAuth2 {
     setSocketToken(socketToken);
   }
 
-  /**
-   * 
+  /** 
    * @param {string} code 
    */
   async connect(code) {
@@ -38,29 +38,36 @@ class Streamlabs extends OAuth2 {
   }
 
   /**
-   * 
-   * @param {object} donation: ->
-   *    @param {sting} name
-   *    @param {string} message
-   *    @param {string} identifier
-   *    @param {double} amount
-   *    @param {string} currency
-   * }
+   * There are 2 actions: get / add
+   *  - get: recive a number param wich define the limit of donations will return
+   *  - add: recive a object param wich define the donation will add
    */
-  addDonation(donation) {
-    return addDonation(donation);
-  }
-
-  /**
-   * 
-   * @param {integer} limit 
-   */
-  getDonations(limit) {
-    return getDonations(limit);
+  donation(action, data) {
+    return donations(action, data);
   }
 
   connectWebSocket() {
     return webSocket();
+  }
+
+  /**
+   * There are 5 actions:
+   * 
+   * create:    https://dev.streamlabs.com/v1.0/reference#alerts
+   * volume: There are 2 internal actions
+   *  - mute    https://dev.streamlabs.com/v1.0/reference#alertsmute_volume
+   *  - unmute  https://dev.streamlabs.com/v1.0/reference#alertsunmute_volume
+   * queue: There are 2 insternal actions
+   *  - pause   https://dev.streamlabs.com/v1.0/reference#alertspause_queue
+   *  - unpause https://dev.streamlabs.com/v1.0/reference#alertsunpause_queue
+   * video: There are 2 internal actions
+   *  - show    https://dev.streamlabs.com/v1.0/reference#alertsshow_video
+   *  - hide    https://dev.streamlabs.com/v1.0/reference#alertshide_video
+   * skip:      https://dev.streamlabs.com/v1.0/reference#alertsskip
+   *
+   */
+  alert(action, data) {
+    return alerts(action, data);
   }
 }
 
