@@ -33,7 +33,7 @@ class Streamlabs extends OAuth2 {
     return result;
   }
 
-  getCredentials() {
+  credentials() {
     return getCredentials();
   }
 
