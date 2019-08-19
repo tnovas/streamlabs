@@ -6,7 +6,7 @@ let streamlabs = new StreamLabs({
 	clientId: "MvaZuJE1VHLIr9mMSwrrbdoSZ236h4yBXxA3xSqI",
 	clientSecret: "WxO5GMuSfJkjBOMJNflb7U9d2doCuJXvmbjdoKDA",
 	redirectUrl: "http://localhost:8080/connect",
-	scopes: "donations.read donations.create alerts.create socket.token alerts.write"
+	scopes: "donations.read donations.create alerts.create socket.token alerts.write points.write"
 });
 
 app.get('/connect', (req, res) => {
@@ -22,11 +22,11 @@ app.get('/connectSocket', (req, res) => {
 });
 
 app.get('/donations/get', (req, res) => {
-	streamlabs.donation('get', req.query.limit).then((result) => res.json(result.data)).catch((err) => res.json(err.response.data));
+	streamlabs.donations.get(req.query.limit).then((result) => res.json(result.data)).catch((err) => res.json(err.response.data));
 });
 
 app.get('/donation/add', (req, res) => {
-	streamlabs.donation('add', {
+	streamlabs.donations.add({
 		  name:"Fishstickslol",
 		  message:"I love Fishsticks!",
 		  identifier:"fishingthesticks@gmail.com",
@@ -38,7 +38,7 @@ app.get('/donation/add', (req, res) => {
 });
 
 app.get('/alert/create', (req, res) => {
-	streamlabs.alert('create', {
+	streamlabs.alerts.create({
 		type: "donation",
 		message: "simple geometry",
 		user_message: "I am second heading",
@@ -48,50 +48,62 @@ app.get('/alert/create', (req, res) => {
 });
 
 app.get('/alert/volume/mute', (req, res) => {
-	streamlabs.alert('volume', 'mute')
+	streamlabs.alerts.volume(streamlabs.alerts.actions.volume.mute)
 	.then((result) => res.json(result.data))
 	.catch((err) => res.json(err.response.data));
 });
 
 app.get('/alert/volume/unmute', (req, res) => {
-	streamlabs.alert('volume', 'unmute')
+	streamlabs.alerts.volume(streamlabs.alerts.actions.volume.unmute)
 	.then((result) => res.json(result.data))
 	.catch((err) => res.json(err.response.data));
 });
 
 app.get('/alert/queue/pause', (req, res) => {
-	streamlabs.alert('queue', 'pause')
+	streamlabs.alerts.queue(streamlabs.alerts.actions.queue.pause)
 	.then((result) => res.json(result.data))
 	.catch((err) => res.json(err.response.data));
 });
 
 app.get('/alert/queue/unpause', (req, res) => {
-	streamlabs.alert('queue', 'unpause')
+	streamlabs.alerts.queue(streamlabs.alerts.actions.queue.unpause)
 	.then((result) => res.json(result.data))
 	.catch((err) => res.json(err.response.data));
 });
 
 app.get('/alert/video/show', (req, res) => {
-	streamlabs.alert('video', 'show')
+	streamlabs.alerts.video(streamlabs.alerts.actions.video.show)
 	.then((result) => res.json(result.data))
 	.catch((err) => res.json(err.response.data));
 });
 
 app.get('/alert/video/hide', (req, res) => {
-	streamlabs.alert('video', 'hide')
+	streamlabs.alerts.video(streamlabs.alerts.actions.video.hide)
 	.then((result) => res.json(result.data))
 	.catch((err) => res.json(err.response.data));
 });
 
 app.get('/alert/skip', (req, res) => {
-	streamlabs.alert('skip')
+	streamlabs.alerts.skip()
 	.then((result) => res.json(result.data))
 	.catch((err) => res.json(err.response.data));
 });
 
 app.get('/credentials', (req, res) => {
 	res.json(streamlabs.credentials());
-})
+});
+
+app.get('/loyalty/subtract', (req, res) => {
+	streamlabs.loyalty.subtract('chimorinkari', 'ChimoTW')
+	.then((result) => res.json(result.data))
+	.catch((err) => res.json(err.response.data));
+});
+
+app.get('/user', (req, res) => {
+	streamlabs.user()
+	.then((result) => res.json(result.data))
+	.catch((err) => res.json(err.response.data));
+});
 
 app.get('/', (req, res) => {
 	res.send(`
@@ -114,6 +126,10 @@ app.get('/', (req, res) => {
 					<li><a href="/alert/queue/unpause" target="_blank">Unpause queue alerts</a></li>
 					<li><a href="/alert/video/show" target="_blank">Show media sharing video</a></li>
 					<li><a href="/alert/video/hide" target="_blank">Hide media sharing video</a></li>
+					<h3>Loyalty</h3>
+					<li><a href="/loyalty/subtract" target="_blank">Subtract points</a></li>
+					<h3>User</h3>
+					<li><a href="/user" target="_blank">User</a></li>
 				</ul>
 			</body>
 		</html>

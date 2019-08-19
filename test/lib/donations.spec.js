@@ -1,7 +1,7 @@
 const { add, get } = require('../../lib/donations');
 const { donations: url } = require('../../lib/utils/urls');
 
-jest.mock('../../lib/request', () => ({
+jest.mock('../../lib/utils/request', () => ({
   get: jest.fn(),
   post: jest.fn(),
 }));
