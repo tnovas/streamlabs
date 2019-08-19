@@ -10,7 +10,7 @@ let streamlabs = new StreamLabs({
 });
 
 app.get('/connect', (req, res) => {
-	streamlabs.connect(req.query.code).then((result) => res.json(result.data)).catch((err) => res.json(err.response.data));
+	streamlabs.connect(req.query.code).then((result) => res.json(result)).catch((err) => res.json(err.response.data));
 });
 
 app.get('/reconnect', (req, res) => {
@@ -99,8 +99,50 @@ app.get('/loyalty/subtract', (req, res) => {
 	.catch((err) => res.json(err.response.data));
 });
 
-app.get('/user', (req, res) => {
-	streamlabs.user()
+app.get('/loyalty/add', (req, res) => {
+	streamlabs.loyalty.add('chimorinkari', [{'ChimoTW': 10}])
+	.then((result) => res.json(result.data))
+	.catch((err) => res.json(err.response.data));
+});
+
+app.get('/loyalty/reset', (req, res) => {
+	streamlabs.loyalty.reset()
+	.then((result) => res.json(result.data))
+	.catch((err) => res.json(err.response.data));
+});
+
+app.get('/loyalty/addAll', (req, res) => {
+	streamlabs.loyalty.add('chimorinkari', 100)
+	.then((result) => res.json(result.data))
+	.catch((err) => res.json(err.response.data));
+});
+
+app.get('/loyalty/edit', (req, res) => {
+	streamlabs.loyalty.edit('ChimoTW', 100)
+	.then((result) => res.json(result.data))
+	.catch((err) => res.json(err.response.data));
+});
+
+app.get('/loyalty/get', (req, res) => {
+	streamlabs.loyalty.edit('chimorinkari', ['ChimoTW'])
+	.then((result) => res.json(result.data))
+	.catch((err) => res.json(err.response.data));
+});
+
+app.get('/loyalty/detail', (req, res) => {
+	streamlabs.loyalty.edit('chimorinkari', 'ChimoTW')
+	.then((result) => res.json(result.data))
+	.catch((err) => res.json(err.response.data));
+});
+
+app.get('/loyalty/query', (req, res) => {
+	streamlabs.loyalty.query({
+		user: 'Ch',
+		sort: streamlabs.loyalty.types.sort.username,
+		order: streamlabs.loyalty.types.order.asc,
+		limit: 10,
+		page: 1,
+	})
 	.then((result) => res.json(result.data))
 	.catch((err) => res.json(err.response.data));
 });
@@ -127,9 +169,14 @@ app.get('/', (req, res) => {
 					<li><a href="/alert/video/show" target="_blank">Show media sharing video</a></li>
 					<li><a href="/alert/video/hide" target="_blank">Hide media sharing video</a></li>
 					<h3>Loyalty</h3>
-					<li><a href="/loyalty/subtract" target="_blank">Subtract points</a></li>
-					<h3>User</h3>
-					<li><a href="/user" target="_blank">User</a></li>
+					<li><a href="/loyalty/subtract" target="_blank">Subtract points to user/s</a></li>
+					<li><a href="/loyalty/add" target="_blank">Add points to user</a></li>
+					<li><a href="/loyalty/reset" target="_blank">Reset all points</a></li>
+					<li><a href="/loyalty/addAll" target="_blank">Add points to all users</a></li>
+					<li><a href="/loyalty/edit" target="_blank">Edit points to user</a></li>
+					<li><a href="/loyalty/get" target="_blank">Get points of user/s</a></li>
+					<li><a href="/loyalty/detail" target="_blank">Get detail loyalty of user</a></li>
+					<li><a href="/loyalty/query" target="_blank">Search loyalty by order, sort and user</a></li>
 				</ul>
 			</body>
 		</html>

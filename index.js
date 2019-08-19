@@ -1,6 +1,6 @@
 const OAuth2 = require('oauth20');
 const { streamlabsAPI } = require('./lib/utils/urls');
-const { get: getCredentials, set: setCredentials, setSocketToken } = require('./lib/credentials');
+const { get: getCredentials, set: setCredentials, setUser } = require('./lib/credentials');
 const donations = require('./lib/donations');
 const alerts = require('./lib/alerts');
 const alertsActions = require('./lib/alerts/actions');
@@ -24,7 +24,7 @@ class Streamlabs extends OAuth2 {
   }) {
     super(clientId, clientSecret, redirectUrl, scopes, accessToken, streamlabsAPI);
 
-    setSocketToken(socketToken);
+    this.socketToken = socketToken;
 
     this.donations = {
       ...donations,
@@ -43,18 +43,22 @@ class Streamlabs extends OAuth2 {
         ...pointsTypes,
       },
     };
-
-    this.user = user;
   }
 
   /**
    * @param {string} code
    */
   async connect(code) {
-    const result = await super.connect(code);
-    setCredentials(super.getCredentials());
+    await super.connect(code);
 
-    return result;
+    setCredentials({
+      ...super.getCredentials(),
+      socketToken: this.socketToken,
+    });
+
+    setUser(await user());
+
+    return getCredentials();
   }
 
   credentials() {
