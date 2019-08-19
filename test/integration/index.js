@@ -60,9 +60,7 @@ app.get('/', (req, res) => {
 					<li><a href="/alert/video/hide" target="_blank">Hide media sharing video</a></li>
 					<h3>Loyalty</h3>
 					<li><a href="/loyalty/subtract" target="_blank">Subtract points to user/s</a></li>
-					<li><a href="/loyalty/add" target="_blank">Add points to user</a></li>
 					<li><a href="/loyalty/reset" target="_blank">Reset all points</a></li>
-					<li><a href="/loyalty/addAll" target="_blank">Add points to all users</a></li>
 					<li><a href="/loyalty/edit" target="_blank">Edit points to user</a></li>
 					<li><a href="/loyalty/get" target="_blank">Get points of user/s</a></li>
 					<li><a href="/loyalty/detail" target="_blank">Get detail loyalty of user</a></li>

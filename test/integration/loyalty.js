@@ -7,25 +7,11 @@ router.get('/subtract', (req, res) => {
 	.catch((err) => res.json(err.response.data));
 });
 
-router.get('/add', (req, res) => {
-	var users = [];
-	users['chimotw'] = 10;
-	streamlabs.loyalty.add('chimorinkari', users)
-	.then((result) => res.json(result.data))
-	.catch((err) => res.json(err.response.data));
-}); // no hace nada
-
 router.get('/reset', (req, res) => {
 	streamlabs.loyalty.reset()
 	.then((result) => res.json(result.data))
 	.catch((err) => res.json(err.response.data));
 });
-
-router.get('/addAll', (req, res) => {
-	streamlabs.loyalty.addAll('chimorinkari', 1000)
-	.then((result) => res.json(result.data))
-	.catch((err) => res.json(err.response.data));
-}); // no hace nada
 
 router.get('/edit', (req, res) => {
 	streamlabs.loyalty.edit('ChimoTW', 100)
