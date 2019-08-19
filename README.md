@@ -40,21 +40,36 @@ const streamlabs = new StreamlabsApi({
   scopes: 'donations.read donations.create alerts.create socket.token alerts.write points.write points.read credits.write jar.write wheel.write',
 });
 ```
-[Authorization](./docs/AUTHORIZATION.md)
 
-[Alerts](./docs/ALERTS.md)
 
-[Donations](./docs/DONATIONS.md)
+------------
 
-[Loyalty](./docs/LOYALTY.md)
+------------
 
-[Wheel](./docs/WHEEL.md)
 
-[Jar](./docs/JAR.md)
 
-[Credits](./docs/CREDITS.md)
+- ####[Authorization](./docs/AUTHORIZATION.md)
+
+- ####[Alerts](./docs/ALERTS.md)
+
+- ####[Donations](./docs/DONATIONS.md)
+
+- ####[Loyalty](./docs/LOYALTY.md)
+
+- ####[Wheel](./docs/WHEEL.md)
+
+- ####[Jar](./docs/JAR.md)
+
+- ####[Credits](./docs/CREDITS.md)
+
+------------
+
+
+------------
+
 
 ## Test Integration:
 You can test the module with your productive credentials. 
 First change the `clientId` and `clientSecret` in `tests/integration/streamlabs.js` with yours credentials, open a console and run `npm start`, open browser and type `http://localhost:8080/`
+
 **WARNING** Always when you run npm start, the first link you click should be Authorization
