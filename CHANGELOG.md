@@ -4,7 +4,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.0] - 2019-08-XX
+## [3.0.0] - 2019-08-19
 ### Added
 - Loyalty functionality
 - Alerts functionality
