@@ -40,8 +40,8 @@ class Streamlabs extends OAuth2 {
         ...alertsActions,
       },
       types: {
-        ...alertsTypes
-      }
+        ...alertsTypes,
+      },
     };
 
     this.loyalty = {
