@@ -33,116 +33,28 @@ Give the credentials of the StreamLabs to the constructor
 | **accessToken**  | *The access token if you have one* | **true** | string |
 
 ```js
-const streamLabs = new StreamlabsApi({
+const streamlabs = new StreamlabsApi({
   clientId: 'clientId',
   clientSecret: 'clientSecret',
-  redirectUrl: 'http://yourdomain/youraction',
-  scopes: 'donations.read donations.create alerts.create socket.token',
+  redirectUrl: 'http://yourdomain/yourrequest',
+  scopes: 'donations.read donations.create alerts.create socket.token alerts.write points.write points.read credits.write jar.write wheel.write',
 });
 ```
+[Authorization](./docs/AUTHORIZATION.md)
 
-### Authorization
-To authenticate with OAuth you will call `authorizationUrl` and will return an URL, you will make a request with a browser and authorizate in OAuth. After that you will be redirect to `RedirectUrl` and you will get a `code` on QueryString `?code='hjqweassxzass'`
+[Alerts](./docs/ALERTS.md)
 
-```js
-const urlAuthorization = streamLabs.authorizationUrl();
-```
+[Donations](./docs/DONATIONS.md)
 
-### Get Access Token
-For generate an access token and refresh token you have to call `connect` with the `code` you got on QueryString
+[Loyalty](./docs/LOYALTY.md)
 
-| Params   | Description     | Optional | Type | 
-| -------- |:---------------| :-----:| :-----:|
-| **Code**  | *The code you got in the querystring* | **false** | string |
+[Wheel](./docs/WHEEL.md)
 
-```js
-streamLabs.connect(code);
-```
+[Jar](./docs/JAR.md)
 
-### Refresh Access Token
-If you need refresh the access token, you have to call `reconnect` and send the `refreshToken`
-
-| Params   | Description     | Optional | Type | 
-| -------- |:---------------| :-----:| :-----:|
-| **RefreshToken**  | *The refresh token you got in credentials* | **false** | string |
-
-```js
-streamLabs.reconnect(refreshToken);
-```
-
-### Get Donations:
-For get donations you have to call `getDonations` and stablish how much donations you want of the collection
-
-| Params   | Description     | Optional | Type | 
-| -------- |:---------------| :-----:| :-----:|
-| **Limit**  | *Stablish how much donations you want of the collection* | **false** | integer |
-
-```js
-streamLabs.getDonations(10);
-```
-
-### Add Donation:
-For add donations you have to call `addDonations` and send an object params
-
-| Params   | Description     | Optional | 
-| -------- |:---------------| :-----:|
-| **Donation**  | *Object with <ul>  <li>Name (string)</li>  <li>Identifier (string)</li> <li>Amount (double)</li> <li>Currency: (string) - See [Currency Codes](https://dev.streamlabs.com/docs/currency-codes/)</li> <li>Message (string)</li></ul>* | **false** |
-
-```js
-{
-  name: 'Name_of_user_donation',
-  identifier: 'Identifyuser@user.com',
-  amount: 10.20,
-  currency: 'USD',
-  message: 'A message'	
-}
-```
-
-### Get alerts real time:
-For get alerts on real time you have to call `connectWebSocket` and you will get a token, it should be used on WebSocket in the client
-
-```js
-Server Side
-streamLabs.connectWebSocket();
-const { socketToken } = streamLabs.getCredentials();
-
-Client Side
-let socket = io(`https://sockets.streamlabs.com?token=${socketToken}`);
-socket.on('event', eventData => console.log(eventData));
-```
-
-### Get Credentials:
-If you need to save credentials, you have to call `getCredentials` and you will get an object
-
-```js
-{
-  accessToken,
-  refreshToken,
-  expiresIn,
-  socketToken
-}
-```
-
-### Promises
-You can use Async Await
-```js
-async function getDonations() {
-  const donations = await streamLabs.getDonations(10);
-  console.log(donations);
-}
-
-getDonations();
-```
+[Credits](./docs/CREDITS.md)
 
 ## Test Integration:
 You can test the module with your productive credentials. 
-First change the `clientId` and `clientSecret` in `tests/integration.js` with yours credentials, open a console and run `npm start`, open browser and type `http://localhost:8080/`
-
-### Urls:
-- `http://localhost:8080/` return the url of [authorization](#authorization), copy and paste into the url of the browser
-- `http://localhost:8080/getDonations?limit=10` return ten [donations](#get-donations)
-- `http://localhost:8080/addDonation` [add donations](#add-donation) and return de id
-- `http://localhost:8080/credentials` [get credentials](#get-credentials)
-- `http://localhost:8080/connectSocket` return the [socket token](#get-alerts-real-time)
-- `http://localhost:8080/reconnect` [refresh access token](#refresh-access-token)
-
+First change the `clientId` and `clientSecret` in `tests/integration/streamlabs.js` with yours credentials, open a console and run `npm start`, open browser and type `http://localhost:8080/`
+**WARNING** Always when you run npm start, the first link you click should be Authorization

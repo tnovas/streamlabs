@@ -3,7 +3,7 @@ const streamlabs = require('./streamlabs');
 
 router.get('/create', (req, res) => {
 	streamlabs.alerts.create({
-		type: "donation",
+		type: streamlabs.alerts.types.donation,
 		message: "simple geometry",
 		user_message: "I am second heading",
 	})

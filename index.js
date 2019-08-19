@@ -4,6 +4,7 @@ const { get: getCredentials, set: setCredentials, setUser } = require('./lib/cre
 const donations = require('./lib/donations');
 const alerts = require('./lib/alerts');
 const alertsActions = require('./lib/alerts/actions');
+const { types: alertsTypes } = require('./lib/alerts/types');
 const points = require('./lib/loyalty');
 const pointsTypes = require('./lib/loyalty/types');
 const user = require('./lib/user');
@@ -38,6 +39,9 @@ class Streamlabs extends OAuth2 {
       actions: {
         ...alertsActions,
       },
+      types: {
+        ...alertsTypes
+      }
     };
 
     this.loyalty = {
