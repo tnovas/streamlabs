@@ -7,7 +7,7 @@
     "url": "https://github.com/tnovas/streamlabs"
   },
   "email": "tnovas@gmail.com",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "This module is a implementation of Streamlabs API https://streamlabs.com/",
   "main": "index.js",
   "scripts": {
