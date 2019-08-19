@@ -1,11 +1,11 @@
-const { add, get } = require('../../lib/donations');
-const { donations: url } = require('../../lib/utils/urls');
+const { add, get } = require('../../../lib/donations');
+const { donations: url } = require('../../../lib/utils/urls');
 
-jest.mock('../../lib/request', () => ({
+jest.mock('../../../lib/utils/request', () => ({
   get: jest.fn(),
   post: jest.fn(),
 }));
-const { get: requestGet, post: requestPost } = require('../../lib/request');
+const { get: requestGet, post: requestPost } = require('../../../lib/utils/request');
 
 describe('Donations', () => {
   describe('Should call to request with de some object and url', () => {

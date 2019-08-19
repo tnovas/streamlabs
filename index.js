@@ -1,7 +1,16 @@
 const OAuth2 = require('oauth20');
 const { streamlabsAPI } = require('./lib/utils/urls');
-const { get: getCredentials, set: setCredentials, setSocketToken } = require('./lib/credentials');
-const { add: addDonation, get: getDonations } = require('./lib/donations');
+const { get: getCredentials, set: setCredentials, setUser } = require('./lib/credentials');
+const donations = require('./lib/donations');
+const alerts = require('./lib/alerts');
+const alertsActions = require('./lib/alerts/actions');
+const { types: alertsTypes } = require('./lib/alerts/types');
+const points = require('./lib/loyalty');
+const pointsTypes = require('./lib/loyalty/types');
+const user = require('./lib/user');
+const credits = require('./lib/credits');
+const jar = require('./lib/jar');
+const wheel = require('./lib/wheel');
 const webSocket = require('./lib/socket');
 
 /**
@@ -11,7 +20,7 @@ const webSocket = require('./lib/socket');
  *    @param {string} redirectUrl
  *    @param {string} scopes
  *    @param {string} socketToken
- *    @param {string} accessToken 
+ *    @param {string} accessToken
  */
 class Streamlabs extends OAuth2 {
   constructor({
@@ -19,44 +28,60 @@ class Streamlabs extends OAuth2 {
   }) {
     super(clientId, clientSecret, redirectUrl, scopes, accessToken, streamlabsAPI);
 
-    setSocketToken(socketToken);
+    this.socketToken = socketToken;
+
+    this.donations = {
+      ...donations,
+    };
+
+    this.alerts = {
+      ...alerts,
+      actions: {
+        ...alertsActions,
+      },
+      types: {
+        ...alertsTypes,
+      },
+    };
+
+    this.loyalty = {
+      ...points,
+      types: {
+        ...pointsTypes,
+      },
+    };
+
+    this.credits = {
+      ...credits,
+    };
+
+    this.jar = {
+      ...jar,
+    };
+
+    this.wheel = {
+      ...wheel,
+    };
   }
 
   /**
-   * 
-   * @param {string} code 
+   * @param {string} code
    */
   async connect(code) {
-    const result = await super.connect(code);
-    setCredentials(super.getCredentials());
+    await super.connect(code);
 
-    return result;
-  }
+    setCredentials({
+      ...super.getCredentials(),
+      socketToken: this.socketToken,
+    });
 
-  getCredentials() {
+    setUser(await user());
+
     return getCredentials();
   }
 
-  /**
-   * 
-   * @param {object} donation: ->
-   *    @param {sting} name
-   *    @param {string} message
-   *    @param {string} identifier
-   *    @param {double} amount
-   *    @param {string} currency
-   * }
-   */
-  addDonation(donation) {
-    return addDonation(donation);
-  }
-
-  /**
-   * 
-   * @param {integer} limit 
-   */
-  getDonations(limit) {
-    return getDonations(limit);
+  credentials() {
+    return getCredentials();
   }
 
   connectWebSocket() {

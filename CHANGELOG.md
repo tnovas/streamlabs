@@ -4,10 +4,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.0.0] - 2019-08-19
+### Added
 - Loyalty functionality
-  
+- Alerts functionality
+- Credits functionality
+- Jar functionality
+- Wheel functionality
+- Docs
 
+### Changed
+- **BREAKING**: All contracts changed
+- Test integrations
+- README
+ 
 ## [2.0.0] - 2019-08-11
 ### Added
 - Params types in code

@@ -7,14 +7,14 @@
     "url": "https://github.com/tnovas/streamlabs"
   },
   "email": "tnovas@gmail.com",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "This module is a implementation of Streamlabs API https://streamlabs.com/",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jest --coverage test/**/*.spec.js",
+    "test": "./node_modules/.bin/jest --coverage test/unit/**.spec.js",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
-    "start": "node --inspect test/integration.js",
-    "lint": "./node_modules/.bin/eslint ./**.js ./test/**/*.js"
+    "start": "node --inspect test/integration",
+    "lint": "./node_modules/.bin/eslint ./lib"
   },
   "devDependencies": {
     "coveralls": "^3.0.6",
