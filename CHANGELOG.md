@@ -17,7 +17,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - **BREAKING**: All contracts changed
 - Test integrations
 - README
-  
+ 
 ## [2.0.0] - 2019-08-11
 ### Added
 - Params types in code
