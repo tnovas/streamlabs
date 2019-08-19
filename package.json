@@ -11,7 +11,7 @@
   "description": "This module is a implementation of Streamlabs API https://streamlabs.com/",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jest --coverage test/**/*.spec.js",
+    "test": "./node_modules/.bin/jest --coverage test/unit/**.spec.js",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "start": "node --inspect test/integration",
     "lint": "./node_modules/.bin/eslint ./lib"

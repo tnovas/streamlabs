@@ -1,4 +1,4 @@
-const { get, set, setSocketToken } = require('../../lib/credentials');
+const { get, set, setSocketToken, setUser } = require('../../../lib/credentials');
 
 const initCredentials = {
   accessToken: 'Uxfsg6kaeese60F477ekgfJsb77xJG6lKut7fgEO',
@@ -38,6 +38,26 @@ describe('Credentials', () => {
     modifyCredentials.socketToken = socketToken;
 
     setSocketToken(socketToken);
+
+    const credentials = get();
+
+    expect(credentials).toEqual(modifyCredentials);
+  });
+
+  it('Should set only user', () => {
+    const user = {
+      streamlabs: {
+        id: 10,
+        name: 'streamlabs',
+      },
+    };
+
+    const modifyCredentials = {
+      ...initCredentials,
+    };
+    modifyCredentials.user = user;
+
+    setUser(user);
 
     const credentials = get();
 

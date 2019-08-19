@@ -1,12 +1,12 @@
 // const mockAxios = require('jest-mock-axios');
-const { get, post } = require('../../lib/request');
+const { get, post } = require('../../../lib/utils/request'); 
 
-jest.mock('../../lib/credentials', () => ({
+jest.mock('../../../lib/credentials', () => ({
   get: jest.fn().mockImplementation(() => ({
     accessToken: 'token',
   })),
 }));
-const { get: getCredentials } = require('../../lib/credentials');
+const { get: getCredentials } = require('../../../lib/credentials');
 
 describe('Request', () => {
   it('Should call post axios with params, access token and url', () => {
