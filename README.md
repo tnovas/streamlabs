@@ -48,19 +48,19 @@ const streamlabs = new StreamlabsApi({
 
 
 
-- #### [Authorization](./docs/AUTHORIZATION.md)
+- #### [Authorization](https://github.com/tnovas/streamlabs/blob/master/docs/AUTHORIZATION.md)
 
-- #### [Alerts](./docs/ALERTS.md)
+- #### [Alerts](https://github.com/tnovas/streamlabs/blob/master/docs/ALERTS.md)
 
-- #### [Donations](./docs/DONATIONS.md)
+- #### [Donations](https://github.com/tnovas/streamlabs/blob/master/docs/DONATIONS.md)
 
-- #### [Loyalty](./docs/LOYALTY.md)
+- #### [Loyalty](https://github.com/tnovas/streamlabs/blob/master/docs/LOYALTY.md)
 
-- #### [Wheel](./docs/WHEEL.md)
+- #### [Wheel](https://github.com/tnovas/streamlabs/blob/master/docs/WHEEL.md)
 
-- #### [Jar](./docs/JAR.md)
+- #### [Jar](https://github.com/tnovas/streamlabs/blob/master/docs/JAR.md)
 
-- #### [Credits](./docs/CREDITS.md)
+- #### [Credits](https://github.com/tnovas/streamlabs/blob/master/docs/CREDITS.md)
 
 ------------
 
