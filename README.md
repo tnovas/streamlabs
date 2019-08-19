@@ -5,7 +5,7 @@
 
 #### This module is a implementation of Streamlabs API https://dev.streamlabs.com/
 
-You need nodejs version > 6x because this module was made with ES6.
+You need nodejs version > 8x because this module was made with ES6.
 ```
 node --version
 ```
