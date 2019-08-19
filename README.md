@@ -48,19 +48,19 @@ const streamlabs = new StreamlabsApi({
 
 
 
-- ####[Authorization](./docs/AUTHORIZATION.md)
+- #### [Authorization](./docs/AUTHORIZATION.md)
 
-- ####[Alerts](./docs/ALERTS.md)
+- #### [Alerts](./docs/ALERTS.md)
 
-- ####[Donations](./docs/DONATIONS.md)
+- #### [Donations](./docs/DONATIONS.md)
 
-- ####[Loyalty](./docs/LOYALTY.md)
+- #### [Loyalty](./docs/LOYALTY.md)
 
-- ####[Wheel](./docs/WHEEL.md)
+- #### [Wheel](./docs/WHEEL.md)
 
-- ####[Jar](./docs/JAR.md)
+- #### [Jar](./docs/JAR.md)
 
-- ####[Credits](./docs/CREDITS.md)
+- #### [Credits](./docs/CREDITS.md)
 
 ------------
 
