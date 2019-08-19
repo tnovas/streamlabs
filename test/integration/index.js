@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
 
+const streamlabs = require('./streamlabs');
 const donations = require('./donations');
 const alerts = require('./alerts');
 const loyalty = require('./loyalty');
-const streamlabs = require('./streamlabs');
+const credits = require('./credits');
+const jar = require('./jar');
+const wheel = require('./wheel');
 
 app.get('/connect', (req, res) => {
 	streamlabs.connect(req.query.code).then((result) => res.json(result)).catch((err) => res.json(err.response.data));
@@ -27,6 +30,12 @@ app.use('/donations', donations);
 app.use('/alert', alerts);
 
 app.use('/loyalty', loyalty);
+
+app.use('/credits', credits);
+
+app.use('/jar', jar);
+
+app.use('/wheel', wheel);
 
 app.get('/', (req, res) => {
 	res.send(`
@@ -58,6 +67,12 @@ app.get('/', (req, res) => {
 					<li><a href="/loyalty/get" target="_blank">Get points of user/s</a></li>
 					<li><a href="/loyalty/detail" target="_blank">Get detail loyalty of user</a></li>
 					<li><a href="/loyalty/query" target="_blank">Search loyalty by order, sort and user</a></li>
+					<h3>Credits</h3>
+					<li><a href="/credits/roll" target="_blank">Roll credits</a></li>
+					<h3>Loyalty</h3>
+					<li><a href="/jar/empty" target="_blank">Empty Jar</a></li>
+					<h3>Loyalty</h3>
+					<li><a href="/wheel/spin" target="_blank">Spin wheel</a></li>
 				</ul>
 			</body>
 		</html>

@@ -7,6 +7,9 @@ const alertsActions = require('./lib/alerts/actions');
 const points = require('./lib/loyalty');
 const pointsTypes = require('./lib/loyalty/types');
 const user = require('./lib/user');
+const credits = require('./lib/credits');
+const jar = require('./lib/jar');
+const wheel = require('./lib/wheel');
 const webSocket = require('./lib/socket');
 
 /**
@@ -42,6 +45,18 @@ class Streamlabs extends OAuth2 {
       types: {
         ...pointsTypes,
       },
+    };
+
+    this.credits = {
+      ...credits,
+    };
+
+    this.jar = {
+      ...jar,
+    };
+
+    this.wheel = {
+      ...wheel,
     };
   }
 
